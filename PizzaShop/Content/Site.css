@@ -38,14 +38,76 @@ header {
     background-size: cover;
 }
 
-header .container {
+    header .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    header h1 {
+        color: #fff;
+        font-weight: 700;
+        text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+    }
+
+/*
+    Menu & menu items
+*/
+.menu-container {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: row;
 }
 
-header h1 {
-    color: #FFF;
-    font-weight: 700;
-    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+.menu-item {
+    flex: 1 0 100%;
+    margin: 1rem;
+    background: #fff;
+}
+
+.menu-item .panel-heading {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.menu-item h3 {
+    margin: 0;
+    padding-bottom: 6px;
+    font-size: 30px;
+    color: #777;
+    border-bottom: 4px double #eee;
+}
+
+.menu-item img {
+    margin-top: 15px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+.topping {
+    margin-top: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #ddd;
+}
+
+.topping h4 {
+    margin: 0;
+    font-size: 16px;
+    line-height: 23px;
+}
+
+@media (min-width: 768px) {
+    .menu-item {
+        flex: 1 0 45%;
+        max-width: 47.25%;
+    }
+}
+
+@media (min-width: 992px) {
+    .menu-item {
+        flex: 1 0 20%;
+        max-width: 23%;
+    }
 }
