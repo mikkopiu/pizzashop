@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background: #F3F3F3;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -21,4 +22,30 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+/*
+    Header banner
+*/
+header {
+    height: 20rem;
+    text-align: center;
+    background-image: url("../Images/page-header-img.jpg");
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+header .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header h1 {
+    color: #FFF;
+    font-weight: 700;
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
 }
