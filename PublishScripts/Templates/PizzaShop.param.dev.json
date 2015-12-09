@@ -1,0 +1,29 @@
+{
+  "siteName": {
+    "value": "PizzaShop2015"
+  },
+  "hostingPlanName": {
+    "value": "CoursesMP"
+  },
+  "siteLocation": {
+    "value": "North Europe"
+  },
+  "sku": {
+    "value": "Free"
+  },
+  "workerSize": {
+    "value": "0"
+  },
+  "siteMode": {
+    "value": "Limited"
+  },
+  "computeMode": {
+    "value": "0"
+  },
+  "subscriptionId": {
+    "value": "4a8fa931-8679-4949-8728-e9607c4f7737"
+  },
+  "resourceGroup": {
+    "value": "finnishsauna"
+  }
+}
