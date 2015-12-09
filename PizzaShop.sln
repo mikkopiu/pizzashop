@@ -3,8 +3,37 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaShop", "PizzaShop\PizzaShop.csproj", "{9BA0F5E4-DDED-4E22-9941-ED5F880C9267}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{8487E4A1-B4DC-489C-91E1-38EE8E5125DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{4E2266A3-CD0A-4A2E-9263-99BD10D93990}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Scripts\Deploy-AzureResourceGroup.ps1 = PublishScripts\Scripts\Deploy-AzureResourceGroup.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{0C700CA4-C266-4104-A37C-8E062702985B}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Templates\PizzaShop.json = PublishScripts\Templates\PizzaShop.json
+		PublishScripts\Templates\PizzaShop.param.dev.json = PublishScripts\Templates\PizzaShop.param.dev.json
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9BA0F5E4-DDED-4E22-9941-ED5F880C9267}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BA0F5E4-DDED-4E22-9941-ED5F880C9267}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BA0F5E4-DDED-4E22-9941-ED5F880C9267}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BA0F5E4-DDED-4E22-9941-ED5F880C9267}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4E2266A3-CD0A-4A2E-9263-99BD10D93990} = {8487E4A1-B4DC-489C-91E1-38EE8E5125DE}
+		{0C700CA4-C266-4104-A37C-8E062702985B} = {8487E4A1-B4DC-489C-91E1-38EE8E5125DE}
 	EndGlobalSection
 EndGlobal
