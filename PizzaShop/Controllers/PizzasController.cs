@@ -6,14 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using PizzaShop.DAL;
 using PizzaShop.Models;
 
 namespace PizzaShop.Controllers
 {
     public class PizzasController : Controller
     {
-        private PizzaShopContext db = new PizzaShopContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Pizzas
         public ActionResult Index()
