@@ -10,5 +10,11 @@ namespace PizzaShop.Models
         public int ID { get; set; }
         public int PizzaID { get; set; }
         public int ToppingID { get; set; }
+
+        public PizzaTopping(int pizzaId, int toppingId)
+        {
+            PizzaID = pizzaId;
+            ToppingID = toppingId;
+        }
     }
 }

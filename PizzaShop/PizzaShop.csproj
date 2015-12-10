@@ -182,7 +182,7 @@
     <Compile Include="Migrations\201512101745365_PizzaUpdate.cs" />
     <Compile Include="Migrations\201512101745365_PizzaUpdate.Designer.cs">
       <DependentUpon>201512101745365_PizzaUpdate.cs</DependentUpon>
-	</Compile>
+    </Compile>
     <Compile Include="Migrations\201512101756162_UserDetails.cs" />
     <Compile Include="Migrations\201512101756162_UserDetails.Designer.cs">
       <DependentUpon>201512101756162_UserDetails.cs</DependentUpon>
@@ -191,12 +191,17 @@
     <Compile Include="Migrations\201512101815439_UserAccounts.Designer.cs">
       <DependentUpon>201512101815439_UserAccounts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512102007197_PizzaUpdate1.cs" />
+    <Compile Include="Migrations\201512102007197_PizzaUpdate1.Designer.cs">
+      <DependentUpon>201512102007197_PizzaUpdate1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Pizza.cs" />
+    <Compile Include="Models\PizzaTopping.cs" />
     <Compile Include="Models\Topping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -291,12 +296,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512101745365_PizzaUpdate.resx">
       <DependentUpon>201512101745365_PizzaUpdate.cs</DependentUpon>
-	</EmbeddedResource>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512101756162_UserDetails.resx">
       <DependentUpon>201512101756162_UserDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512101815439_UserAccounts.resx">
       <DependentUpon>201512101815439_UserAccounts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512102007197_PizzaUpdate1.resx">
+      <DependentUpon>201512102007197_PizzaUpdate1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -51,7 +51,7 @@ namespace PizzaShop.Controllers
             var selectList = new List<SelectListItem>();
 
             selectList.Add(
-                new SelectListItem { Value = "0", Text = "-- Select Topping --" }
+                new SelectListItem { Value = "0", Text = "Select Topping" }
             );
 
             foreach (Topping topping in toppings)
@@ -76,6 +76,25 @@ namespace PizzaShop.Controllers
             {
                 db.Pizzas.Add(pizza);
                 db.SaveChanges();
+
+                var toppingIds = new List<string>();
+                toppingIds.Add(Request.Form["Topping1"]);
+                toppingIds.Add(Request.Form["Topping2"]);
+                toppingIds.Add(Request.Form["Topping3"]);
+                toppingIds.Add(Request.Form["Topping4"]);
+                toppingIds.Add(Request.Form["Topping5"]);
+
+                foreach(var value in toppingIds)
+                {
+                    int intValue = int.Parse(value);
+                    if (intValue != 0)
+                    {
+                        db.PizzaToppings.Add(new PizzaTopping(pizza.Id, int.Parse(value)));
+                    }
+                }
+
+                db.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
 

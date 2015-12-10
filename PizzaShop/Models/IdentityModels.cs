@@ -32,6 +32,7 @@ namespace PizzaShop.Models
         public DbSet<Topping> Toppings { get; set; }
         public DbSet<Pizza> Pizzas { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<PizzaTopping> PizzaToppings { get; set; }
 
         public static ApplicationDbContext Create()
         {
