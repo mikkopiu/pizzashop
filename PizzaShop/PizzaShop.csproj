@@ -179,6 +179,10 @@
     <Compile Include="Migrations\201512101717224_Initial.Designer.cs">
       <DependentUpon>201512101717224_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512101745365_PizzaUpdate.cs" />
+    <Compile Include="Migrations\201512101745365_PizzaUpdate.Designer.cs">
+      <DependentUpon>201512101745365_PizzaUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -276,6 +280,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201512101717224_Initial.resx">
       <DependentUpon>201512101717224_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512101745365_PizzaUpdate.resx">
+      <DependentUpon>201512101745365_PizzaUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

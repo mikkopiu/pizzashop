@@ -38,7 +38,27 @@ namespace PizzaShop.Controllers
         // GET: Pizzas/Create
         public ActionResult Create()
         {
+            IEnumerable<SelectListItem> allToppings = GetSelectListItems();
+
+            ViewBag.AllToppings = allToppings;
+
             return View();
+        }
+
+        private IEnumerable<SelectListItem> GetSelectListItems()
+        {
+            List<Topping> toppings = db.Toppings.ToList();
+            var selectList = new List<SelectListItem>();
+
+            foreach (Topping topping in toppings)
+            {
+                selectList.Add(
+                    new SelectListItem { Value = topping.ID.ToString(), Text = topping.Name }
+                );
+            }
+
+            return selectList;
+
         }
 
         // POST: Pizzas/Create
