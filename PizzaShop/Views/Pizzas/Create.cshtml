@@ -21,11 +21,37 @@
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">1.Topping</label>
             <div class="col-md-10">
-                @Html.DropDownList("AllToppings")
+                @Html.DropDownList("Topping1", (List<SelectListItem>) ViewBag.AllToppings, null, new { @class = "form-control" })
             </div>
         </div>
-
+        <div class="form-group">
+            <label class="control-label col-md-2">2.Topping</label>
+            <div class="col-md-10">
+                @Html.DropDownList("Topping2", (List<SelectListItem>)ViewBag.AllToppings, null, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">3.Topping</label>
+            <div class="col-md-10">
+                @Html.DropDownList("Topping3", (List<SelectListItem>)ViewBag.AllToppings, null, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">4.Topping</label>
+            <div class="col-md-10">
+                @Html.DropDownList("Topping4", (List<SelectListItem>)ViewBag.AllToppings, null, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">5.Topping</label>
+            <div class="col-md-10">
+                @Html.DropDownList("Topping5", (List<SelectListItem>)ViewBag.AllToppings, null, new { @class = "form-control" })
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />

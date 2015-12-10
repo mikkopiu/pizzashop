@@ -50,6 +50,10 @@ namespace PizzaShop.Controllers
             List<Topping> toppings = db.Toppings.ToList();
             var selectList = new List<SelectListItem>();
 
+            selectList.Add(
+                new SelectListItem { Value = "0", Text = "-- Select Topping --" }
+            );
+
             foreach (Topping topping in toppings)
             {
                 selectList.Add(
