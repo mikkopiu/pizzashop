@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace PizzaShop.Controllers
 {
@@ -13,7 +14,8 @@ namespace PizzaShop.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Pizzas.ToList());
+            List<Pizza> pizzas = db.Pizzas.Include(p => p.Toppings).ToList();
+            return View(pizzas);
         }
 
         public ActionResult About()
