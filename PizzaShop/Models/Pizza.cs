@@ -10,7 +10,7 @@ namespace PizzaShop.Models
     {
         private List<Topping> toppings = new List<Topping>();
 
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string Name { get; set; }
         public int PriceCents { get; set; }
         public List<Topping> Toppings

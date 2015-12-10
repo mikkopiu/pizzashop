@@ -182,7 +182,7 @@
     <Compile Include="Migrations\201512101745365_PizzaUpdate.cs" />
     <Compile Include="Migrations\201512101745365_PizzaUpdate.Designer.cs">
       <DependentUpon>201512101745365_PizzaUpdate.cs</DependentUpon>
-	</Compile>
+    </Compile>
     <Compile Include="Migrations\201512101756162_UserDetails.cs" />
     <Compile Include="Migrations\201512101756162_UserDetails.Designer.cs">
       <DependentUpon>201512101756162_UserDetails.cs</DependentUpon>
@@ -208,6 +208,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\default-pizza.jpg" />
+    <Content Include="Images\default-pizza_medium.jpg" />
     <Content Include="Images\page-header-img-medium.jpg" />
     <Content Include="Images\page-header-img.jpg" />
     <Content Include="Scripts\bootstrap.js" />
@@ -291,7 +293,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512101745365_PizzaUpdate.resx">
       <DependentUpon>201512101745365_PizzaUpdate.cs</DependentUpon>
-	</EmbeddedResource>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512101756162_UserDetails.resx">
       <DependentUpon>201512101756162_UserDetails.cs</DependentUpon>
     </EmbeddedResource>

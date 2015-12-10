@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PizzaShop.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +9,11 @@ namespace PizzaShop.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         public ActionResult Index()
         {
-            return View();
+            return View(db.Pizzas.ToList());
         }
 
         public ActionResult About()
