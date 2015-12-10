@@ -12,6 +12,7 @@ namespace PizzaShop.Models
 
         public int Id { get; set; }
         public string Name { get; set; }
+        public int PriceCents { get; set; }
         public List<Topping> Toppings
         {
             get { return toppings; }
@@ -31,6 +32,16 @@ namespace PizzaShop.Models
         public void removeToppingByIndex(int index)
         {
             toppings.RemoveAt(index);
+        }
+
+        public Topping getToppingByIndex(int index)
+        {
+            return toppings.ElementAt(index);
+        }
+
+        public int getToppingIndex(Topping topping)
+        {
+            return toppings.IndexOf(topping);
         }
 
     }
