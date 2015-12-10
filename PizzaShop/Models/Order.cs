@@ -38,7 +38,7 @@ namespace PizzaShop.Models
         [Phone]
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Phone number")]
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         [DataType(DataType.EmailAddress)]
         [EmailAddress]

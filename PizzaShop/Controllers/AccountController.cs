@@ -151,7 +151,14 @@ namespace PizzaShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    PhoneNumber = model.PhoneNumber,
+                    HomeAddress = model.HomeAddress,
+                    HomePostCode = model.HomePostCode,
+                    HomeCity = model.HomeCity
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
