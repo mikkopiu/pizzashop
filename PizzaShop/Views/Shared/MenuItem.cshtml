@@ -1,33 +1,18 @@
-﻿<div class="panel panel-default menu-item">
-    <div class="panel-heading">Best pizza</div>
+﻿@model PizzaShop.Models.Pizza
+
+<div class="panel panel-default menu-item">
+    <div class="panel-heading">@Model.Name</div>
     <div class="panel-body">
-        <img class="img-responsive" src="~/Images/page-header-img-medium.jpg" />
-        @*Pseudo code
-            @{
-                foreach(var topping in ViewBag.Toppings)
-                {
-                    <div class="topping">
-                        <h4>topping.Title</h4>
-                        <div class="clearfix"></div>
-                    </div>
-                }
-            }
-        *@
-        <div class="topping">
-            <h4>Anjovis</h4>
-            <div class="clearfix"></div>
-        </div>
-        <div class="topping">
-            <h4>Salami</h4>
-            <div class="clearfix"></div>
-        </div>
-        <div class="topping">
-            <h4>Lettuce</h4>
-            <div class="clearfix"></div>
-        </div>
-        <div class="topping">
-            <h4>Bacon</h4>
-            <div class="clearfix"></div>
-        </div>
+        <img class="img-responsive" src="~/Images/default-pizza_medium.jpg" />
+        @foreach (var topping in Model.Toppings)
+        {
+            <div class="topping">
+                <h4>@topping.Name</h4>
+                <div class="clearfix"></div>
+            </div>
+        }
+        <hr />
+        <button type="button" class="btn btn-default">Edit</button>
+        <button type="button" class="btn btn-success">Add to cart</button>
     </div>
 </div>

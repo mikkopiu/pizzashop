@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<PizzaShop.Models.Pizza>
+
+@{
     ViewBag.Title = "Pizzas";
 }
 
@@ -11,11 +13,10 @@
 <div class="row">
     <div class="col-md-12">
         <div class="menu-container">
-            @Html.Partial("../Shared/MenuItem")
-            @Html.Partial("../Shared/MenuItem")
-            @Html.Partial("../Shared/MenuItem")
-            @Html.Partial("../Shared/MenuItem")
-            @Html.Partial("../Shared/MenuItem")
+            @foreach (var item in Model)
+            {
+                @Html.Partial("../Shared/MenuItem", item)
+            }
         </div>
     </div>
 </div>

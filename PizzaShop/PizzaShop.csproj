@@ -213,6 +213,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\default-pizza.jpg" />
+    <Content Include="Images\default-pizza_medium.jpg" />
     <Content Include="Images\page-header-img-medium.jpg" />
     <Content Include="Images\page-header-img.jpg" />
     <Content Include="Scripts\bootstrap.js" />
