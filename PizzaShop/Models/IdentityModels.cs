@@ -21,9 +21,13 @@ namespace PizzaShop.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("PizzaShopDB", throwIfV1Schema: false)
         {
         }
+
+        public DbSet<Topping> Toppings { get; set; }
+        public DbSet<Pizza> Pizzas { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
         public static ApplicationDbContext Create()
         {
