@@ -116,18 +116,22 @@ namespace PizzaShop.Controllers
             {
                 return View(model);
             }
-            // Generate the token and send it
+
+            // Skip the whole verification, unnecessary here just fake it with a code
             var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
-            if (UserManager.SmsService != null)
+            var result = await UserManager.ChangePhoneNumberAsync(User.Identity.GetUserId(), model.Number, code);
+            if (result.Succeeded)
             {
-                var message = new IdentityMessage
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                if (user != null)
                 {
-                    Destination = model.Number,
-                    Body = "Your security code is: " + code
-                };
-                await UserManager.SmsService.SendAsync(message);
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                }
+                return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
             }
-            return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
+            // If we got this far, something failed, redisplay form
+            ModelState.AddModelError("", "Failed to verify phone");
+            return View(model);
         }
 
         //
