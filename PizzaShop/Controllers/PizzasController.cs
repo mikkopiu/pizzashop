@@ -48,6 +48,7 @@ namespace PizzaShop.Controllers
         private IEnumerable<SelectListItem> GetSelectListItems()
         {
             List<Topping> toppings = db.Toppings.ToList();
+
             var selectList = new List<SelectListItem>();
 
             selectList.Add(
@@ -89,7 +90,7 @@ namespace PizzaShop.Controllers
                     int intValue = int.Parse(value);
                     if (intValue != 0)
                     {
-                        db.PizzaToppings.Add(new PizzaTopping(pizza.ID, int.Parse(value)));
+                        //db.PizzaToppings.Add(new PizzaTopping(pizza.ID, int.Parse(value)));
                     }
                 }
 

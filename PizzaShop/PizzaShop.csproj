@@ -199,13 +199,16 @@
     <Compile Include="Migrations\201512102030299_PizzaUpdate2.Designer.cs">
       <DependentUpon>201512102030299_PizzaUpdate2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512102138061_PizzaUpdate3.cs" />
+    <Compile Include="Migrations\201512102138061_PizzaUpdate3.Designer.cs">
+      <DependentUpon>201512102138061_PizzaUpdate3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Pizza.cs" />
-    <Compile Include="Models\PizzaTopping.cs" />
     <Compile Include="Models\Topping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -314,6 +317,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512102030299_PizzaUpdate2.resx">
       <DependentUpon>201512102030299_PizzaUpdate2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512102138061_PizzaUpdate3.resx">
+      <DependentUpon>201512102138061_PizzaUpdate3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
