@@ -170,7 +170,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\ToppingsController.cs" />
     <Compile Include="DAL\PizzaShopContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -178,6 +177,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Pizza.cs" />
     <Compile Include="Models\Topping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -243,11 +243,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\Banner.cshtml" />
     <Content Include="Views\Shared\MenuItem.cshtml" />
-    <Content Include="Views\Toppings\Create.cshtml" />
-    <Content Include="Views\Toppings\Delete.cshtml" />
-    <Content Include="Views\Toppings\Details.cshtml" />
-    <Content Include="Views\Toppings\Edit.cshtml" />
-    <Content Include="Views\Toppings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
