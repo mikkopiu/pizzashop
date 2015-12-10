@@ -37,5 +37,22 @@ namespace PizzaShop.Models
         {
             return new ApplicationDbContext();
         }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<Pizza>()
+                .HasMany(c => c.Toppings)
+                .WithMany()
+                .Map(x =>
+                {
+                    x.MapLeftKey("PizzaID");
+                    x.MapRightKey("ToppingID");
+                    x.ToTable("PizzaTopping");
+                });
+
+            base.OnModelCreating(modelBuilder);
+                
+        }
     }
 }
