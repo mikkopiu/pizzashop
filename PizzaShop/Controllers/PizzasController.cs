@@ -20,21 +20,6 @@ namespace PizzaShop.Controllers
             return View(db.Pizzas.ToList());
         }
 
-        // GET: Pizzas/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Pizza pizza = db.Pizzas.Find(id);
-            if (pizza == null)
-            {
-                return HttpNotFound();
-            }
-            return View(pizza);
-        }
-
         // GET: Pizzas/Create
         public ActionResult Create()
         {
