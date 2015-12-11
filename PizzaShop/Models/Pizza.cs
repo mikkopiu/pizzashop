@@ -15,6 +15,7 @@ namespace PizzaShop.Models
         [Required]
         public string Name { get; set; }
         [Required]
+        [Display(Name = "Price in Cents")]
         public int PriceCents { get; set; }
         public List<Topping> Toppings
         {

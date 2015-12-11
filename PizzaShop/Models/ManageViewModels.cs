@@ -51,6 +51,7 @@ namespace PizzaShop.Models
 
         [Required]
         [Display(Name = "Postal Code")]
+        [StringLength(100, ErrorMessage = "Maximum length is 100 characters.", MinimumLength = 2)]
         public string HomePostCode { get; set; }
 
         [Required]

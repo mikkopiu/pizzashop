@@ -36,7 +36,7 @@
         @for(var key = 0; key < ViewBag.SavedToppings.Length; key++)
         {
             <div class="form-group">
-                <label class="control-label col-md-2">@("Topping" + (key + 1).ToString())</label>
+                <label class="control-label col-md-2">@((key + 1).ToString() + ".Topping")</label>
                 <div class="col-md-10">
                     @Html.DropDownList("Topping" + (key + 1).ToString(), new SelectList(ViewBag.AllToppings, "Value", "Text", ViewBag.SavedToppings[key].ToString()), null, new { @class = "form-control" })
                 </div>
