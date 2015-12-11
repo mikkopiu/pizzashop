@@ -210,10 +210,14 @@
     <Compile Include="Migrations\201512111153535_PizzaUpdate5.cs" />
     <Compile Include="Migrations\201512111153535_PizzaUpdate5.Designer.cs">
       <DependentUpon>201512111153535_PizzaUpdate5.cs</DependentUpon>
-	</Compile>
+    </Compile>
     <Compile Include="Migrations\201512111503200_PizzaNameNullable.cs" />
     <Compile Include="Migrations\201512111503200_PizzaNameNullable.Designer.cs">
       <DependentUpon>201512111503200_PizzaNameNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512111516447_PizzaUpdate6.cs" />
+    <Compile Include="Migrations\201512111516447_PizzaUpdate6.Designer.cs">
+      <DependentUpon>201512111516447_PizzaUpdate6.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -338,9 +342,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512111153535_PizzaUpdate5.resx">
       <DependentUpon>201512111153535_PizzaUpdate5.cs</DependentUpon>
-	</EmbeddedResource>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512111503200_PizzaNameNullable.resx">
       <DependentUpon>201512111503200_PizzaNameNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512111516447_PizzaUpdate6.resx">
+      <DependentUpon>201512111516447_PizzaUpdate6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

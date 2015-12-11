@@ -158,10 +158,32 @@ namespace PizzaShop.Controllers
                         pizza.addTopping(db.Toppings.Find(intValue));
                     }
                 }
+
+                Pizza dbPizza = db.Pizzas.Include(p => p.Toppings).Single(c => c.ID == pizza.ID);
+                db.Entry(dbPizza).CurrentValues.SetValues(pizza);
                 
-                db.Entry(pizza).State = EntityState.Modified;
-                db.Entry(pizza.Toppings).CurrentValues.SetValues(pizza.Toppings);
+                foreach(var topping in dbPizza.Toppings.ToList())
+                {
+                    if(!pizza.Toppings.Any(s => s.ID == topping.ID))
+                    {
+                        dbPizza.Toppings.Remove(topping);
+                    }
+                }
+
+                foreach(var newTopping in pizza.Toppings)
+                {
+                    var dbTopping = dbPizza.Toppings.SingleOrDefault(s => s.ID == newTopping.ID);
+                    if(dbTopping != null)
+                    {
+                        db.Entry(dbTopping).CurrentValues.SetValues(newTopping);
+                    } else
+                    {
+                        dbPizza.Toppings.Add(newTopping);
+                    }
+                }
+
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
             return View(pizza);
