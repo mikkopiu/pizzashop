@@ -42,6 +42,23 @@ namespace PizzaShop.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class ChangeAddressViewModel
+    {
+        [Required]
+        [StringLength(100, ErrorMessage = "Maximum length is 100 characters.", MinimumLength = 2)]
+        [Display(Name = "Home Address")]
+        public string HomeAddress { get; set; }
+
+        [Required]
+        [Display(Name = "Postal Code")]
+        public string HomePostCode { get; set; }
+
+        [Required]
+        [Display(Name = "City")]
+        [StringLength(100, ErrorMessage = "Maximum length is 100 characters.", MinimumLength = 2)]
+        public string HomeCity { get; set; }
+    }
+
     public class ChangePasswordViewModel
     {
         [Required]

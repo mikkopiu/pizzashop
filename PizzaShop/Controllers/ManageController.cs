@@ -64,6 +64,8 @@ namespace PizzaShop.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+            var user = await UserManager.FindByIdAsync(userId);
+
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
@@ -72,6 +74,11 @@ namespace PizzaShop.Controllers
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
+
+            model.HomeAddress = user.HomeAddress;
+            model.HomeCity = user.HomeCity;
+            model.HomePostCode = user.HomePostCode;
+
             return View(model);
         }
 
@@ -213,6 +220,47 @@ namespace PizzaShop.Controllers
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
             return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
+        }
+        
+        //
+        // GET: /Manage/ChangeAddress
+        public ActionResult ChangeAddress()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+
+            var model = new ChangeAddressViewModel();
+            model.HomeAddress = user.HomeAddress;
+            model.HomeCity = user.HomeCity;
+            model.HomePostCode = user.HomePostCode;
+
+            return View(model);
+        }
+
+        //
+        // POST: /Manage/ChangeAddress
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeAddress(ChangeAddressViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+
+            if(user != null)
+            {
+                user.HomeAddress = model.HomeAddress;
+                user.HomeCity = model.HomeCity;
+                user.HomePostCode = model.HomePostCode;
+
+                await UserManager.UpdateAsync(user);
+
+                return RedirectToAction("Index", new { Message = "Address successfully updated." });
+            }
+
+            return View(model);
         }
 
         //
