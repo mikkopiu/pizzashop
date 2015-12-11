@@ -20,21 +20,6 @@ namespace PizzaShop.Controllers
             return View(db.Toppings.ToList());
         }
 
-        // GET: Toppings/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Topping topping = db.Toppings.Find(id);
-            if (topping == null)
-            {
-                return HttpNotFound();
-            }
-            return View(topping);
-        }
-
         // GET: Toppings/Create
         public ActionResult Create()
         {
