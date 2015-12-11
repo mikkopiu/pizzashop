@@ -4,9 +4,30 @@
     ViewBag.Title = "Pizzas";
 }
 
+
+<script type="text/javascript">
+    $(function () {
+        // Document.ready -> link up remove event handler
+        $(".add-to-cart-btn").click(function () {
+            // Get the id from the link
+            var pizzaToAdd = $(this).attr("data-id");
+            if (pizzaToAdd != '') {
+                // Perform the ajax post
+                $.post(
+                    "/ShoppingCart/AddToCart",
+                    { "id": pizzaToAdd },
+                    function (data) {
+                        console.log(data);
+                    }
+                );
+            }
+        });
+    });
+</script>
+
 <div class="row">
     <div class="col-md-12">
-        <h3>Choose your pizza</h3>
+        <h3>Choose your pizza(s)</h3>
         <hr />
     </div>
 </div>
