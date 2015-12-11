@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using PizzaShop.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace PizzaShop.Models
 {
@@ -11,7 +12,9 @@ namespace PizzaShop.Models
         private List<Topping> toppings = new List<Topping>();
 
         public int ID { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public int PriceCents { get; set; }
         public List<Topping> Toppings
         {

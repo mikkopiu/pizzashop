@@ -71,7 +71,7 @@ namespace PizzaShop.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Pizza pizza)
+        public ActionResult Create([Bind(Include = "Id,Name,PriceCents")] Pizza pizza)
         {
             if (ModelState.IsValid)
             {
@@ -107,11 +107,30 @@ namespace PizzaShop.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pizza pizza = db.Pizzas.Find(id);
+            Pizza pizza = db.Pizzas.Include(p => p.Toppings).SingleOrDefault(x => x.ID == id);
             if (pizza == null)
             {
                 return HttpNotFound();
             }
+
+            IEnumerable<SelectListItem> allToppings = GetSelectListItems();
+            ViewBag.AllToppings = allToppings;
+
+            var savedToppings = new int[5];
+
+            for(int i = 0; i < 5; i++)
+            {
+                if(pizza.Toppings.ElementAtOrDefault(i) != null)
+                {
+                    savedToppings[i] = pizza.Toppings[i].ID;
+                } else
+                {
+                    savedToppings[i] = 0;
+                }
+            }
+
+            ViewBag.SavedToppings = savedToppings;
+
             return View(pizza);
         }
 
@@ -120,11 +139,28 @@ namespace PizzaShop.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] Pizza pizza)
+        public ActionResult Edit([Bind(Include = "Id,Name,PriceCents")] Pizza pizza)
         {
             if (ModelState.IsValid)
             {
+                var toppingIds = new List<string>();
+                toppingIds.Add(Request.Form["Topping1"]);
+                toppingIds.Add(Request.Form["Topping2"]);
+                toppingIds.Add(Request.Form["Topping3"]);
+                toppingIds.Add(Request.Form["Topping4"]);
+                toppingIds.Add(Request.Form["Topping5"]);
+
+                foreach (var value in toppingIds)
+                {
+                    int intValue = int.Parse(value);
+                    if (intValue != 0)
+                    {
+                        pizza.addTopping(db.Toppings.Find(intValue));
+                    }
+                }
+                
                 db.Entry(pizza).State = EntityState.Modified;
+                db.Entry(pizza.Toppings).CurrentValues.SetValues(pizza.Toppings);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
