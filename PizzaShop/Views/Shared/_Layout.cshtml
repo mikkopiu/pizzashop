@@ -32,6 +32,9 @@
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
+                <div class="navbar-form navbar-right">
+                    @Html.ActionLink("Shopping cart", "Index", "ShoppingCart", null, new { @class = "btn btn-success" })
+                </div>
             </div>
         </div>
     </div>

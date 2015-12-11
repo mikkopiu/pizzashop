@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace PizzaShop.Controllers
 {
@@ -14,7 +15,32 @@ namespace PizzaShop.Controllers
         // GET: ShoppingCart
         public ActionResult Index()
         {
-            return View();
+            List<Pizza> cart;
+
+            // Init cart if it doesn't already exist
+            if (Session["cart"] == null)
+            {
+                cart = new List<Pizza>();
+            }
+            else
+            {
+                cart = (List<Pizza>)Session["cart"];
+            }
+
+            // Count total cart price
+            int totalCents = 0;
+            foreach (Pizza p in cart)
+            {
+                totalCents += p.PriceCents;
+            }
+
+            var viewModel = new ShoppingCartViewModel
+            {
+                CartPizzas = cart,
+                CartTotalCents = totalCents
+            };
+
+            return View(viewModel);
         }
 
         //
@@ -23,7 +49,7 @@ namespace PizzaShop.Controllers
         public ActionResult AddToCart(int id)
         {
             // Retrieve the Pizza to add from the database
-            var addedPizza = db.Pizzas.Single(p => p.ID == id);
+            var addedPizza = db.Pizzas.Include(p => p.Toppings).Single(p => p.ID == id);
 
             List<Pizza> cart;
 

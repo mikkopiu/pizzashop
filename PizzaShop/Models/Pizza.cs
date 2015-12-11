@@ -21,6 +21,14 @@ namespace PizzaShop.Models
             get { return toppings; }
             set { toppings = value; }
         }
+
+        public string DisplayPrice
+        {
+            get
+            {
+                return ((float)this.PriceCents / 100).ToString();
+            }
+        }
     
         public void addTopping(Topping topping)
         {
