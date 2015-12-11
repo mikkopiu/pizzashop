@@ -23,6 +23,7 @@ namespace PizzaShop.Models
             set { toppings = value; }
         }
 
+        [Display(Name = "Price")]
         public string DisplayPrice
         {
             get
