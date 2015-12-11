@@ -15,27 +15,14 @@ namespace PizzaShop.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Toppings
+        [Authorize(Roles = "admin")]
         public ActionResult Index()
         {
             return View(db.Toppings.ToList());
         }
 
-        // GET: Toppings/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Topping topping = db.Toppings.Find(id);
-            if (topping == null)
-            {
-                return HttpNotFound();
-            }
-            return View(topping);
-        }
-
         // GET: Toppings/Create
+        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             return View();
@@ -44,6 +31,7 @@ namespace PizzaShop.Controllers
         // POST: Toppings/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Name,PriceCents")] Topping topping)
@@ -59,6 +47,7 @@ namespace PizzaShop.Controllers
         }
 
         // GET: Toppings/Edit/5
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -76,6 +65,7 @@ namespace PizzaShop.Controllers
         // POST: Toppings/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Name,PriceCents")] Topping topping)
@@ -90,6 +80,7 @@ namespace PizzaShop.Controllers
         }
 
         // GET: Toppings/Delete/5
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -105,6 +96,7 @@ namespace PizzaShop.Controllers
         }
 
         // POST: Toppings/Delete/5
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

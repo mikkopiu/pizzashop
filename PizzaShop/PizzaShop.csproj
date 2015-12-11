@@ -298,12 +298,10 @@
     <Content Include="Views\Shared\MenuItem.cshtml" />
     <Content Include="Views\Toppings\Create.cshtml" />
     <Content Include="Views\Toppings\Delete.cshtml" />
-    <Content Include="Views\Toppings\Details.cshtml" />
     <Content Include="Views\Toppings\Edit.cshtml" />
     <Content Include="Views\Toppings\Index.cshtml" />
     <Content Include="Views\Pizzas\Create.cshtml" />
     <Content Include="Views\Pizzas\Delete.cshtml" />
-    <Content Include="Views\Pizzas\Details.cshtml" />
     <Content Include="Views\Pizzas\Edit.cshtml" />
     <Content Include="Views\Pizzas\Index.cshtml" />
   </ItemGroup>
