@@ -32,6 +32,8 @@ namespace PizzaShop.Models
         public DbSet<Topping> Toppings { get; set; }
         public DbSet<Pizza> Pizzas { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderLine> OrderLines { get; set; }
+        public DbSet<CustomPizzaTopping> CustomPizzaToppings { get; set; }
 
         public static ApplicationDbContext Create()
         {
@@ -50,6 +52,10 @@ namespace PizzaShop.Models
                     x.MapRightKey("ToppingID");
                     x.ToTable("PizzaTopping");
                 });
+
+            modelBuilder.Entity<Order>()
+                .HasMany(c => c.OrderLines)
+                .WithRequired(a => a.Order);
 
             base.OnModelCreating(modelBuilder);
                 

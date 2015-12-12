@@ -8,7 +8,7 @@ namespace PizzaShop.Models
 {
     public class Order
     {
-        private List<Pizza> pizzas = new List<Pizza>();
+        private List<OrderLine> orderLines = new List<OrderLine>();
 
         [Required]
         public int ID { get; set; }
@@ -44,25 +44,25 @@ namespace PizzaShop.Models
         [EmailAddress]
         public string Email { get; set; }
         
-        public List<Pizza> Pizzas
+        public List<OrderLine> OrderLines
         {
-            get { return pizzas; }
-            set { pizzas = value; }
+            get { return orderLines; }
+            set { orderLines = value; }
         }
 
-        public void addPizza(Pizza pizza)
+        public void addOrderLine(OrderLine orderLine)
         {
-            pizzas.Add(pizza);
+            orderLines.Add(orderLine);
         }
 
-        public void removePizza(Pizza pizza)
+        public void removeOrderLine(OrderLine orderLine)
         {
-            pizzas.Remove(pizza);
+            orderLines.Remove(orderLine);
         }
 
-        public void removePizzaByIndex(int index)
+        public void removeOrderLineByIndex(int index)
         {
-            pizzas.RemoveAt(index);
+            orderLines.RemoveAt(index);
         }
     }
 }

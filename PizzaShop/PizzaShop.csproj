@@ -220,12 +220,18 @@
     <Compile Include="Migrations\201512111516447_PizzaUpdate6.Designer.cs">
       <DependentUpon>201512111516447_PizzaUpdate6.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512121811403_PizzaUpdate7.cs" />
+    <Compile Include="Migrations\201512121811403_PizzaUpdate7.Designer.cs">
+      <DependentUpon>201512121811403_PizzaUpdate7.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CartItem.cs" />
+    <Compile Include="Models\CustomPizzaTopping.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderLine.cs" />
     <Compile Include="Models\Pizza.cs" />
     <Compile Include="Models\ShoppingCartRemoveViewModel.cs" />
     <Compile Include="Models\ShoppingCartViewModel.cs" />
@@ -353,6 +359,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512111516447_PizzaUpdate6.resx">
       <DependentUpon>201512111516447_PizzaUpdate6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512121811403_PizzaUpdate7.resx">
+      <DependentUpon>201512121811403_PizzaUpdate7.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
