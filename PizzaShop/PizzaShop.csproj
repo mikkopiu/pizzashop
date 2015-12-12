@@ -170,6 +170,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PizzasController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\ToppingsController.cs" />
@@ -223,6 +224,10 @@
     <Compile Include="Migrations\201512121811403_PizzaUpdate7.cs" />
     <Compile Include="Migrations\201512121811403_PizzaUpdate7.Designer.cs">
       <DependentUpon>201512121811403_PizzaUpdate7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512121903304_PizzaUpdate8.cs" />
+    <Compile Include="Migrations\201512121903304_PizzaUpdate8.Designer.cs">
+      <DependentUpon>201512121903304_PizzaUpdate8.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -314,6 +319,7 @@
     <Content Include="Views\Manage\ChangeAddress.cshtml" />
     <Content Include="Views\ShoppingCart\Index.cshtml" />
     <Content Include="Views\Shared\CustomPizzaModal.cshtml" />
+    <Content Include="Views\Orders\Order.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -362,6 +368,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512121811403_PizzaUpdate7.resx">
       <DependentUpon>201512121811403_PizzaUpdate7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512121903304_PizzaUpdate8.resx">
+      <DependentUpon>201512121903304_PizzaUpdate8.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
