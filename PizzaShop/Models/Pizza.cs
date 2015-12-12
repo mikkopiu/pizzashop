@@ -15,7 +15,9 @@ namespace PizzaShop.Models
         public string Name { get; set; }
 
         [Required]
-        [Display(Name = "Price in Euros")]
+        [Display(Name = "Price")]
+        [DisplayFormat(ApplyFormatInEditMode = false, DataFormatString = "{0:c}", ConvertEmptyStringToNull = true)]
+        [DataType(DataType.Currency)]
         public decimal PriceEur { get; set; }
 
         public List<Topping> Toppings
