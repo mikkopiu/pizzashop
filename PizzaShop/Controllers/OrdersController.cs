@@ -7,6 +7,7 @@ using PizzaShop.Models;
 using System.Data;
 using System.Data.Entity;
 using System.Net;
+using Microsoft.AspNet.Identity;
 
 namespace PizzaShop.Controllers
 {
@@ -26,6 +27,21 @@ namespace PizzaShop.Controllers
             } else if(cart.Count < 1)
             {
                 return RedirectToAction("Index", "ShoppingCart");
+            }
+
+            var user = db.Users.Find(User.Identity.GetUserId());
+
+            if(user != null)
+            {
+                Order order = new Order();
+                order.DeliveryAddress = user.HomeAddress;
+                order.DeliveryCity = user.HomeCity;
+                order.DeliveryPostCode = user.HomePostCode;
+                order.PhoneNumber = user.PhoneNumber;
+                order.Email = user.Email;
+                order.Client = user;
+
+                return View(order);
             }
 
             return View();
