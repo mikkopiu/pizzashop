@@ -8,8 +8,6 @@
 <script type="text/javascript">
     $(function () {
         $(".remove-item-link").click(function (e) {
-            e.preventDefault();
-
             // Get the id from the link
             var pizzaToDelete = $(this).attr("data-id");
             if (pizzaToDelete != '') {
@@ -18,9 +16,8 @@
                     "/ShoppingCart/RemoveFromCart",
                     { "id": pizzaToDelete },
                     function (data) {
-                        console.log(data);
                         $('#row-' + data.DeleteId).fadeOut('fast');
-                        $('#cart-total strong').text(data.CartTotalCents / 100 + "€");
+                        $('#cart-total').text(data.CartTotalCents / 100);
                     }
                 );
             }
@@ -79,8 +76,8 @@
                         <tr class="active">
                             <td><strong>Total</strong></td>
                             <td></td>
-                            <td id="cart-total">
-                                <strong>@Model.DisplayCartTotal &euro;</strong>
+                            <td>
+                                <strong id="cart-total">@Model.DisplayCartTotal</strong> &euro;
                             </td>
                             <td></td>
                         </tr>

@@ -307,6 +307,7 @@
     <Content Include="Views\Pizzas\Index.cshtml" />
     <Content Include="Views\Manage\ChangeAddress.cshtml" />
     <Content Include="Views\ShoppingCart\Index.cshtml" />
+    <Content Include="Views\Shared\CustomPizzaModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -76,8 +76,10 @@ namespace PizzaShop.Controllers
             return Json(results);
         }
 
+        //
+        // POST: /ShoppingCart/AddCustomToCart
         [HttpPost]
-        public ActionResult AddCustomToCart(Pizza pizza)
+        public ActionResult AddCustomToCart(int id, int[] toppingIds)
         {
             List<CartItem> cart;
 
@@ -91,10 +93,28 @@ namespace PizzaShop.Controllers
                 cart = (List<CartItem>)Session["cart"];
             }
 
+            // Find the base pizza (no need to include toppings, as they will be replaced anyway)
+            Pizza selectedBasePizza = db.Pizzas.FirstOrDefault(p => p.ID == id);
+            List<Topping> toppings = new List<Topping>();
+
+            // Not enough to just find every Topping in DB,
+            // because there might be multiple instances of the same Topping
+            // that need to be added here.
+            foreach (int tId in toppingIds)
+            {
+                Topping t = db.Toppings.FirstOrDefault(d => d.ID == tId);
+                if (t != null)
+                {
+                    toppings.Add(t);
+                }
+            }
+
+            selectedBasePizza.Toppings = toppings;
+
             CartItem item = new CartItem
             {
-                ID = long.Parse(pizza.ID.ToString() + UnixTimeNow().ToString()),
-                Pizza = pizza
+                ID = long.Parse(selectedBasePizza.ID.ToString() + UnixTimeNow().ToString()),
+                Pizza = selectedBasePizza
             };
 
             // Add to shopping cart
@@ -106,7 +126,7 @@ namespace PizzaShop.Controllers
             // Display the confirmation message
             var results = new ShoppingCartRemoveViewModel
             {
-                Message = Server.HtmlEncode(pizza.Name) +
+                Message = Server.HtmlEncode("") +
                     " has been added to your cart.",
                 CartTotalCents = countTotalPriceCents(cart),
                 ItemCount = cart.Count()

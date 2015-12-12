@@ -6,9 +6,38 @@
 
 <script type="text/javascript">
     $(function () {
-        // Document.ready -> link up remove event handler
+        var $modalEl = $(".custom-pizza-modal");
+
+        function fillToppingSelects(allToppings, pizzaToppings) {
+            $modalEl.find(".topping-list").each(function (i, el) {
+                var html = '<option value="-1">Select topping</option>';
+
+                var valueSelected = false;
+
+                allToppings.forEach(function (d) {
+                    var selected = false;
+
+                    if (!valueSelected) {
+                        for (var i = 0; i < pizzaToppings.length; i++) {
+                            if (pizzaToppings[i].ID === d.ID) {
+                                selected = true;
+                                valueSelected = true;
+                                pizzaToppings.splice(i, 1);
+                                break;
+                            }
+                        }
+                    }
+
+                    html += '<option value="' + d.ID + '"' + (selected ? ' selected' : '') + '>' +
+                        d.Name + ' (' + (d.PriceCents / 100) + ' €)' +
+                        '</option>';
+                });
+
+                $(el).html(html);
+            });
+        }
+
         $(".add-to-cart-btn").click(function () {
-            // Get the id from the link
             var pizzaToAdd = $(this).attr("data-id");
             if (pizzaToAdd != '') {
                 // Perform the ajax post
@@ -16,13 +45,62 @@
                     "/ShoppingCart/AddToCart",
                     { "id": pizzaToAdd },
                     function (data) {
-                        console.log(data);
+                        $("#cart-main-btn")
+                            .text("Shopping cart (" +
+                                (data.CartTotalCents / 100) +
+                                " €)"
+                            );
                     }
                 );
             }
         });
+
+        $(".edit-pizza-btn").click(function () {
+            var pizzaToEdit = $(this).attr("data-id");
+            if (pizzaToEdit != '') {
+                // Perform the ajax post
+                $.post(
+                    "/Pizzas/Detail",
+                    { "id": pizzaToEdit },
+                    function (data) {
+                        $modalEl.modal("show");
+                        $modalEl.find(".modal-title").text(data.Pizza.Name);
+                        $("#add-custom-btn").data("id", data.Pizza.ID);
+
+                        fillToppingSelects(data.Toppings, data.Pizza.Toppings);
+                    }
+                );
+            }
+        });
+
+        $("#add-custom-btn").click(function (e) {
+            var id = parseInt($(e.currentTarget).data("id"), 10);
+            var toppings = [];
+
+            $modalEl.find(".topping-list").each(function (i, el) {
+                var val = parseInt(el.value, 10);
+                if (val > -1) {
+                    toppings.push(val);
+                }
+            });
+
+            $.post(
+                    "/ShoppingCart/AddCustomToCart",
+                    { "id": id, "toppingIds": toppings },
+                    function (data) {
+                        $modalEl.modal("hide");
+                        $("#cart-main-btn")
+                            .text("Shopping cart (" +
+                                (data.CartTotalCents / 100) +
+                                " €)"
+                            );
+                    }
+                );
+        });
     });
 </script>
+
+@Html.Partial("../Shared/CustomPizzaModal")
 
 <div class="row">
     <div class="col-md-12">

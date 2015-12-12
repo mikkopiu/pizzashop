@@ -244,6 +244,18 @@ namespace PizzaShop.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public ActionResult Detail(int id)
+        {
+            Pizza pizza = db.Pizzas.Include(p => p.Toppings).First(p => p.ID == id);
+            List<Topping> toppings = db.Toppings.ToList();
+            return Json(new
+            {
+                Toppings = toppings,
+                Pizza = pizza
+            });
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
