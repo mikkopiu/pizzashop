@@ -29,6 +29,15 @@ namespace PizzaShop.Controllers
 
             ViewBag.AllToppings = allToppings;
 
+            var savedToppings = new int[5];
+
+            for (int i = 0; i < 5; i++)
+            {
+                savedToppings[i] = 0;
+            }
+
+            ViewBag.SavedToppings = savedToppings;
+
             return View();
         }
 
@@ -49,15 +58,6 @@ namespace PizzaShop.Controllers
                 );
             }
 
-            var savedToppings = new int[5];
-
-            for (int i = 0; i < 5; i++)
-            {
-                savedToppings[i] = 0;
-            }
-
-            ViewBag.SavedToppings = savedToppings;
-
             return selectList;
 
         }
@@ -77,6 +77,8 @@ namespace PizzaShop.Controllers
             toppingIds.Add(Request.Form["Topping4"]);
             toppingIds.Add(Request.Form["Topping5"]);
 
+            var savedToppings = new int[5];
+
             foreach (var value in toppingIds)
             {
                 int intValue = int.Parse(value);
@@ -85,16 +87,6 @@ namespace PizzaShop.Controllers
                     pizza.addTopping(db.Toppings.Find(intValue));
                 }
             }
-
-            if (ModelState.IsValid)
-            {
-                db.Pizzas.Add(pizza);
-                db.SaveChanges();
-                
-                return RedirectToAction("Index");
-            }
-
-            var savedToppings = new int[5];
 
             for (int i = 0; i < 5; i++)
             {
@@ -107,8 +99,28 @@ namespace PizzaShop.Controllers
                     savedToppings[i] = 0;
                 }
             }
-
+            
             ViewBag.SavedToppings = savedToppings;
+
+            IEnumerable<SelectListItem> allToppings = GetSelectListItems();
+            ViewBag.AllToppings = allToppings;
+
+            // Validate toppings.
+            bool duplicates = pizza.Toppings.GroupBy(n => n).Any(c => c.Count() > 1);
+            
+            if(duplicates)
+            {
+                ViewBag.DuplicateToppings = "Please select a specific topping only once.";
+                return View(pizza);
+            }
+
+            if (ModelState.IsValid)
+            {
+                db.Pizzas.Add(pizza);
+                db.SaveChanges();
+                
+                return RedirectToAction("Index");
+            }
 
             return View(pizza);
         }
