@@ -8,7 +8,7 @@ namespace PizzaShop.Models
 {
     public class ShoppingCartViewModel
     {
-        public List<Pizza> CartPizzas { get; set; }
+        public List<CartItem> CartPizzas { get; set; }
         public int CartTotalCents { get; set; }
 
         public String DisplayCartTotal

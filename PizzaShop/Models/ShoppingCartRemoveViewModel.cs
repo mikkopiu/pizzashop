@@ -10,6 +10,6 @@ namespace PizzaShop.Models
         public string Message { get; set; }
         public int CartTotalCents { get; set; }
         public int ItemCount { get; set; }
-        public int DeleteId { get; set; }
+        public long DeleteId { get; set; }
     }
 }
