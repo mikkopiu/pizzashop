@@ -168,23 +168,53 @@ namespace PizzaShop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,PriceCents")] Pizza pizza)
         {
+            var toppingIds = new List<string>();
+            toppingIds.Add(Request.Form["Topping1"]);
+            toppingIds.Add(Request.Form["Topping2"]);
+            toppingIds.Add(Request.Form["Topping3"]);
+            toppingIds.Add(Request.Form["Topping4"]);
+            toppingIds.Add(Request.Form["Topping5"]);
+
+            foreach (var value in toppingIds)
+            {
+                int intValue = int.Parse(value);
+                if (intValue != 0)
+                {
+                    pizza.addTopping(db.Toppings.Find(intValue));
+                }
+            }
+
+            IEnumerable<SelectListItem> allToppings = GetSelectListItems();
+            ViewBag.AllToppings = allToppings;
+
+            var savedToppings = new int[5];
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (pizza.Toppings.ElementAtOrDefault(i) != null)
+                {
+                    savedToppings[i] = pizza.Toppings[i].ID;
+                }
+                else
+                {
+                    savedToppings[i] = 0;
+                }
+            }
+
+            ViewBag.SavedToppings = savedToppings;
+
+            // Validate toppings.
+            bool duplicates = pizza.Toppings.GroupBy(n => n).Any(c => c.Count() > 1);
+
+            if (duplicates)
+            {
+                ViewBag.DuplicateToppings = "Please select a specific topping only once.";
+                return View(pizza);
+            }
+
             if (ModelState.IsValid)
             {
-                var toppingIds = new List<string>();
-                toppingIds.Add(Request.Form["Topping1"]);
-                toppingIds.Add(Request.Form["Topping2"]);
-                toppingIds.Add(Request.Form["Topping3"]);
-                toppingIds.Add(Request.Form["Topping4"]);
-                toppingIds.Add(Request.Form["Topping5"]);
-
-                foreach (var value in toppingIds)
-                {
-                    int intValue = int.Parse(value);
-                    if (intValue != 0)
-                    {
-                        pizza.addTopping(db.Toppings.Find(intValue));
-                    }
-                }
+                
 
                 Pizza dbPizza = db.Pizzas.Include(p => p.Toppings).Single(c => c.ID == pizza.ID);
                 db.Entry(dbPizza).CurrentValues.SetValues(pizza);
