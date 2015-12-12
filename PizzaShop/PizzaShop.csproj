@@ -224,6 +224,14 @@
     <Compile Include="Migrations\201512121811403_PizzaUpdate7.Designer.cs">
       <DependentUpon>201512121811403_PizzaUpdate7.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512121944233_PizzaPriceToDecimal.cs" />
+    <Compile Include="Migrations\201512121944233_PizzaPriceToDecimal.Designer.cs">
+      <DependentUpon>201512121944233_PizzaPriceToDecimal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512121948391_ToppingPriceToDecimal.cs" />
+    <Compile Include="Migrations\201512121948391_ToppingPriceToDecimal.Designer.cs">
+      <DependentUpon>201512121948391_ToppingPriceToDecimal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CartItem.cs" />
@@ -362,6 +370,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512121811403_PizzaUpdate7.resx">
       <DependentUpon>201512121811403_PizzaUpdate7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512121944233_PizzaPriceToDecimal.resx">
+      <DependentUpon>201512121944233_PizzaPriceToDecimal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512121948391_ToppingPriceToDecimal.resx">
+      <DependentUpon>201512121948391_ToppingPriceToDecimal.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -21,12 +21,12 @@ namespace PizzaShop.Migrations
                 new Topping
                 {
                     Name = "Bacon",
-                    PriceCents = 200
+                    PriceEur = 200
                 },
                 new Topping
                 {
                     Name = "Pepperoni",
-                    PriceCents = 150
+                    PriceEur = 150
                 }
                 );
 

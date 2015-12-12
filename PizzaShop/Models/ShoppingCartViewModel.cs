@@ -9,14 +9,6 @@ namespace PizzaShop.Models
     public class ShoppingCartViewModel
     {
         public List<CartItem> CartPizzas { get; set; }
-        public int CartTotalCents { get; set; }
-
-        public String DisplayCartTotal
-        {
-            get
-            {
-                return ((float)this.CartTotalCents / 100).ToString();
-            }
-        }
+        public decimal CartTotalPrice { get; set; }
     }
 }

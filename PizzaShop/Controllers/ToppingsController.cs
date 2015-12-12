@@ -34,7 +34,7 @@ namespace PizzaShop.Controllers
         [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,PriceCents")] Topping topping)
+        public ActionResult Create([Bind(Include = "ID,Name,PriceEur")] Topping topping)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +68,7 @@ namespace PizzaShop.Controllers
         [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,PriceCents")] Topping topping)
+        public ActionResult Edit([Bind(Include = "ID,Name,PriceEur")] Topping topping)
         {
             if (ModelState.IsValid)
             {

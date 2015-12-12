@@ -31,7 +31,7 @@ namespace PizzaShop.Controllers
             var viewModel = new ShoppingCartViewModel
             {
                 CartPizzas = cart,
-                CartTotalCents = countTotalPriceCents(cart)
+                CartTotalPrice = countTotalPrice(cart)
             };
 
             return View(viewModel);
@@ -70,7 +70,7 @@ namespace PizzaShop.Controllers
             {
                 Message = Server.HtmlEncode(addedPizza.Name) +
                     " has been added to your cart.",
-                CartTotalCents = countTotalPriceCents(cart),
+                CartTotalPrice = countTotalPrice(cart),
                 ItemCount = cart.Count()
             };
             return Json(results);
@@ -128,7 +128,7 @@ namespace PizzaShop.Controllers
             {
                 Message = Server.HtmlEncode("") +
                     " has been added to your cart.",
-                CartTotalCents = countTotalPriceCents(cart),
+                CartTotalPrice = countTotalPrice(cart),
                 ItemCount = cart.Count()
             };
             return Json(results);
@@ -157,7 +157,7 @@ namespace PizzaShop.Controllers
             {
                 Message = "One (1) " + Server.HtmlEncode(pizzaName) +
                     " has been removed from your shopping cart.",
-                CartTotalCents = countTotalPriceCents(cart),
+                CartTotalPrice = countTotalPrice(cart),
                 ItemCount = cart.Count(),
                 DeleteId = id
             };
@@ -165,15 +165,15 @@ namespace PizzaShop.Controllers
         }
 
         // Count total cost of shopping cart
-        private int countTotalPriceCents(List<CartItem> pizzas)
+        private decimal countTotalPrice(List<CartItem> pizzas)
         {
             // Count total cart price
-            int totalCents = 0;
+            decimal total = 0;
             foreach (CartItem p in pizzas)
             {
-                totalCents += p.Pizza.PriceCents;
+                total += p.Pizza.PriceEur;
             }
-            return totalCents;
+            return total;
         }
 
         // Get a UNIX timestamp (millis), because C# doesn't have such a method

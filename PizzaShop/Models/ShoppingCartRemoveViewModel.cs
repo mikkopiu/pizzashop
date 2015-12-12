@@ -8,7 +8,7 @@ namespace PizzaShop.Models
     public class ShoppingCartRemoveViewModel
     {
         public string Message { get; set; }
-        public int CartTotalCents { get; set; }
+        public decimal CartTotalPrice { get; set; }
         public int ItemCount { get; set; }
         public long DeleteId { get; set; }
     }

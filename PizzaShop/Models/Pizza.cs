@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using PizzaShop.Models;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PizzaShop.Models
 {
@@ -12,26 +10,20 @@ namespace PizzaShop.Models
         private List<Topping> toppings = new List<Topping>();
 
         public int ID { get; set; }
+
         [Required]
         public string Name { get; set; }
+
         [Required]
-        [Display(Name = "Price in Cents")]
-        public int PriceCents { get; set; }
+        [Display(Name = "Price in Euros")]
+        public decimal PriceEur { get; set; }
+
         public List<Topping> Toppings
         {
             get { return toppings; }
             set { toppings = value; }
         }
 
-        [Display(Name = "Price")]
-        public string DisplayPrice
-        {
-            get
-            {
-                return ((float)this.PriceCents / 100).ToString();
-            }
-        }
-    
         public void addTopping(Topping topping)
         {
             toppings.Add(topping);

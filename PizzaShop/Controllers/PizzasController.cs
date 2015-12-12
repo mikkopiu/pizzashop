@@ -68,7 +68,7 @@ namespace PizzaShop.Controllers
         [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,PriceCents")] Pizza pizza)
+        public ActionResult Create([Bind(Include = "Id,Name,PriceEur")] Pizza pizza)
         {
             var toppingIds = new List<string>();
             toppingIds.Add(Request.Form["Topping1"]);
@@ -166,7 +166,7 @@ namespace PizzaShop.Controllers
         [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,PriceCents")] Pizza pizza)
+        public ActionResult Edit([Bind(Include = "Id,Name,PriceEur")] Pizza pizza)
         {
             var toppingIds = new List<string>();
             toppingIds.Add(Request.Form["Topping1"]);

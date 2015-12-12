@@ -23,7 +23,7 @@
                     allToppings.forEach(function (d) {
 
                         html += '<option value="' + d.ID + '">' +
-                            d.Name + ' (' + (d.PriceCents / 100) + ' €)' +
+                            d.Name + ' (' + d.PriceEur + ' €)' +
                             '</option>';
                     });
                 }
@@ -42,8 +42,7 @@
                     function (data) {
                         $("#cart-main-btn")
                             .text("Shopping cart (" +
-                                (data.CartTotalCents / 100) +
-                                " €)"
+                                data.CartTotalPrice + " €)"
                             );
                     }
                 );
@@ -86,8 +85,7 @@
                         $modalEl.modal("hide");
                         $("#cart-main-btn")
                             .text("Shopping cart (" +
-                                (data.CartTotalCents / 100) +
-                                " €)"
+                                data.CartTotalPrice + " €)"
                             );
                     }
                 );
