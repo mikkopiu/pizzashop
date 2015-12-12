@@ -144,6 +144,7 @@ namespace PizzaShop.Controllers
             return Json(results);
         }
 
+        // Count total cost of shopping cart
         private int countTotalPriceCents(List<CartItem> pizzas)
         {
             // Count total cart price
@@ -155,6 +156,7 @@ namespace PizzaShop.Controllers
             return totalCents;
         }
 
+        // Get a UNIX timestamp (millis), because C# doesn't have such a method
         private long UnixTimeNow()
         {
             return (long)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds; ;
