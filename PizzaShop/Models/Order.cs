@@ -19,7 +19,6 @@ namespace PizzaShop.Models
         // Optional, orders can be made by unregistered users
         public ApplicationUser Client { get; set; }
 
-        [Required]
         public DateTime OrderDate { get; set; }
 
         [Required(ErrorMessage = "Delivery address is required")]
