@@ -10,28 +10,23 @@
 
         function fillToppingSelects(allToppings, pizzaToppings) {
             $modalEl.find(".topping-list").each(function (i, el) {
-                var html = '<option value="-1">Select topping</option>';
+                var html = '';
 
-                var valueSelected = false;
+                if (pizzaToppings.length > 0) {
+                    $(el).prop("disabled", true);
+                    html = '<option value="-1">' + pizzaToppings[0].Name + '</option>';
+                    pizzaToppings.splice(0, 1);
+                } else {
+                    html = '<option value="-1">Select topping</option>';
+                    var valueSelected = false;
 
-                allToppings.forEach(function (d) {
-                    var selected = false;
+                    allToppings.forEach(function (d) {
 
-                    if (!valueSelected) {
-                        for (var i = 0; i < pizzaToppings.length; i++) {
-                            if (pizzaToppings[i].ID === d.ID) {
-                                selected = true;
-                                valueSelected = true;
-                                pizzaToppings.splice(i, 1);
-                                break;
-                            }
-                        }
-                    }
-
-                    html += '<option value="' + d.ID + '"' + (selected ? ' selected' : '') + '>' +
-                        d.Name + ' (' + (d.PriceCents / 100) + ' €)' +
-                        '</option>';
-                });
+                        html += '<option value="' + d.ID + '">' +
+                            d.Name + ' (' + (d.PriceCents / 100) + ' €)' +
+                            '</option>';
+                    });
+                }
 
                 $(el).html(html);
             });
