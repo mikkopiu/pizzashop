@@ -55,6 +55,8 @@ namespace PizzaShop.Controllers
         {
             var cart = (List<CartItem>)Session["cart"];
 
+            ViewBag.Cart = cart;
+
             // Return to cart if it doesn't exist or there are no CartItems.
             if(cart == null)
             {
@@ -66,7 +68,9 @@ namespace PizzaShop.Controllers
 
             var user = db.Users.Find(User.Identity.GetUserId());
 
-            if(user != null)
+            ViewBag.CartTotalPrice = ShoppingCartController.GetCartTotalPrice();
+
+            if (user != null)
             {
                 Order order = new Order();
                 order.DeliveryAddress = user.HomeAddress;
@@ -78,8 +82,6 @@ namespace PizzaShop.Controllers
 
                 return View(order);
             }
-
-            ViewBag.CartTotalPrice = ShoppingCartController.GetCartTotalPrice();
 
             return View();
         }
