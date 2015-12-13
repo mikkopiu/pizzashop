@@ -34,6 +34,7 @@ namespace PizzaShop
                     .Where(t => t.IsSubclassOf(typeof(Controller)));
             var controllerNames = controllers.Select(c => c.Name.Replace("Controller", ""));
 
-            return string.Format("({0})", string.Join("|", controllerNames)); }
+            return string.Format("({0})", string.Join("|", controllerNames));
+        }
     }
 }

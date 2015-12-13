@@ -15,6 +15,14 @@ namespace PizzaShop.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        // List all orders
+        // GET: /Orders/Index
+        [Authorize(Roles = "admin")]
+        public ActionResult Index()
+        {
+            return View(db.Orders.Include(o => o.OrderLines).ToList());
+        }
+
         // GET: Enter order details
         public ActionResult Order()
         {
