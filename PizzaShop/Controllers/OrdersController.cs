@@ -143,6 +143,9 @@ namespace PizzaShop.Controllers
                 var context = GlobalHost.ConnectionManager.GetHubContext<OrderHub>();
                 context.Clients.All.addNewOrder(json);
 
+                // Finally clear the shopping cart
+                Session.Contents.Remove("cart");
+
                 return RedirectToAction("Index", "Home");
             }
 
