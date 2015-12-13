@@ -27,7 +27,7 @@ namespace PizzaShop.Controllers
                 cart = (List<CartItem>)Session["cart"];
             }
 
-            decimal totalPrice = countTotalPrice(cart);
+            decimal totalPrice = Utils.CountCartTotalPrice(cart);
 
             // For displaying the current cart price on load
             ViewBag.CartTotalPrice = totalPrice;
@@ -62,7 +62,7 @@ namespace PizzaShop.Controllers
 
             // Add to shopping cart
             cart.Add(new CartItem {
-                ID = long.Parse(addedPizza.ID.ToString() + UnixTimeNow().ToString()),
+                ID = long.Parse(addedPizza.ID.ToString() + Utils.UnixTimeNow().ToString()),
                 Pizza = addedPizza
             });
 
@@ -74,7 +74,7 @@ namespace PizzaShop.Controllers
             {
                 Message = Server.HtmlEncode(addedPizza.Name) +
                     " has been added to your cart.",
-                CartTotalPrice = countTotalPrice(cart),
+                CartTotalPrice = Utils.CountCartTotalPrice(cart),
                 ItemCount = cart.Count()
             };
             return Json(results);
@@ -117,7 +117,7 @@ namespace PizzaShop.Controllers
 
             CartItem item = new CartItem
             {
-                ID = long.Parse(selectedBasePizza.ID.ToString() + UnixTimeNow().ToString()),
+                ID = long.Parse(selectedBasePizza.ID.ToString() + Utils.UnixTimeNow().ToString()),
                 Pizza = selectedBasePizza
             };
 
@@ -132,7 +132,7 @@ namespace PizzaShop.Controllers
             {
                 Message = Server.HtmlEncode("") +
                     " has been added to your cart.",
-                CartTotalPrice = countTotalPrice(cart),
+                CartTotalPrice = Utils.CountCartTotalPrice(cart),
                 ItemCount = cart.Count()
             };
             return Json(results);
@@ -161,7 +161,7 @@ namespace PizzaShop.Controllers
             {
                 Message = "One (1) " + Server.HtmlEncode(pizzaName) +
                     " has been removed from your shopping cart.",
-                CartTotalPrice = countTotalPrice(cart),
+                CartTotalPrice = Utils.CountCartTotalPrice(cart),
                 ItemCount = cart.Count(),
                 DeleteId = id
             };
@@ -169,35 +169,10 @@ namespace PizzaShop.Controllers
         }
 
         // Public getter for current total price of cart items
-        public static decimal getCartTotalPrice()
+        public static decimal GetCartTotalPrice()
         {
             List<CartItem> cart = (List<CartItem>)System.Web.HttpContext.Current.Session["cart"];
-
-            if (cart == null || cart.Count() < 1)
-            {
-                return 0.0m;
-            } else
-            {
-                return countTotalPrice(cart);
-            }
-        }
-
-        // Count total cost of shopping cart
-        private static decimal countTotalPrice(List<CartItem> pizzas)
-        {
-            // Count total cart price
-            decimal total = 0;
-            foreach (CartItem p in pizzas)
-            {
-                total += p.Pizza.PriceEur;
-            }
-            return total;
-        }
-
-        // Get a UNIX timestamp (millis), because C# doesn't have such a method
-        private long UnixTimeNow()
-        {
-            return (long)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds; ;
+            return Utils.CountCartTotalPrice(cart);
         }
     }
 }

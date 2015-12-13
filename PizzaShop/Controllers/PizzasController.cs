@@ -18,7 +18,7 @@ namespace PizzaShop.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Index()
         {
-            ViewBag.CartTotalPrice = ShoppingCartController.getCartTotalPrice();
+            ViewBag.CartTotalPrice = ShoppingCartController.GetCartTotalPrice();
 
             return View(db.Pizzas.ToList());
         }
@@ -39,7 +39,7 @@ namespace PizzaShop.Controllers
             }
 
             ViewBag.SavedToppings = savedToppings;
-            ViewBag.CartTotalPrice = ShoppingCartController.getCartTotalPrice();
+            ViewBag.CartTotalPrice = ShoppingCartController.GetCartTotalPrice();
 
             return View();
         }
@@ -159,7 +159,7 @@ namespace PizzaShop.Controllers
             }
 
             ViewBag.SavedToppings = savedToppings;
-            ViewBag.CartTotalPrice = ShoppingCartController.getCartTotalPrice();
+            ViewBag.CartTotalPrice = ShoppingCartController.GetCartTotalPrice();
 
             return View(pizza);
         }
@@ -264,7 +264,7 @@ namespace PizzaShop.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.CartTotalPrice = ShoppingCartController.getCartTotalPrice();
+            ViewBag.CartTotalPrice = ShoppingCartController.GetCartTotalPrice();
 
             return View(pizza);
         }
