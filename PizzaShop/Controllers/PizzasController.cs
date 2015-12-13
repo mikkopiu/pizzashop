@@ -83,7 +83,7 @@ namespace PizzaShop.Controllers
             {
                 if (file != null)
                 {
-                    string fileName = (pizza.ID + pizza.Name + Path.GetExtension(file.FileName)).Replace(" ", string.Empty);
+                    string fileName = (pizza.ID + DateTime.UtcNow.ToString()).GetHashCode().ToString();
 
                     // Save image blob in Azure Cloud Storage
                     await Task.Run(() =>
@@ -234,7 +234,7 @@ namespace PizzaShop.Controllers
                     }
 
                     // Save new file
-                    string fileName = (pizza.ID + pizza.Name + Path.GetExtension(file.FileName)).Replace(" ", string.Empty);
+                    string fileName = (pizza.ID + DateTime.UtcNow.ToString()).GetHashCode().ToString();
 
                     pizza.ImageFileName = fileName;
 
