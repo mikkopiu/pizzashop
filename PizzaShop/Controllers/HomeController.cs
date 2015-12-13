@@ -14,6 +14,8 @@ namespace PizzaShop.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.CartTotalPrice = ShoppingCartController.getCartTotalPrice();
+
             List<Pizza> pizzas = db.Pizzas.Include(p => p.Toppings).ToList();
             return View(pizzas);
         }

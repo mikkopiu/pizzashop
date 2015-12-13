@@ -5,7 +5,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
-using System.Diagnostics;
 
 namespace PizzaShop.Controllers
 {
@@ -164,8 +163,22 @@ namespace PizzaShop.Controllers
             return Json(results);
         }
 
+        // Public getter for current total price of cart items
+        public static decimal getCartTotalPrice()
+        {
+            List<CartItem> cart = (List<CartItem>)System.Web.HttpContext.Current.Session["cart"];
+
+            if (cart == null || cart.Count() < 1)
+            {
+                return 0.0m;
+            } else
+            {
+                return countTotalPrice(cart);
+            }
+        }
+
         // Count total cost of shopping cart
-        private decimal countTotalPrice(List<CartItem> pizzas)
+        private static decimal countTotalPrice(List<CartItem> pizzas)
         {
             // Count total cart price
             decimal total = 0;
