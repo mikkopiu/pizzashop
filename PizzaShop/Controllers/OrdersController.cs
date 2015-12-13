@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 using System.Diagnostics;
 using PizzaShop.Hubs;
 using Microsoft.AspNet.SignalR;
+using Newtonsoft.Json;
 
 namespace PizzaShop.Controllers
 {
@@ -128,9 +129,18 @@ namespace PizzaShop.Controllers
                 db.Orders.Add(order);
                 db.SaveChanges();
 
+                // Parse the new Order into JSON.
+                // Ignore self-referencing fields to avoid Exception (e.g. the Order-property).
+                string json = JsonConvert.SerializeObject(order, Formatting.Indented,
+                    new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    }
+                );
+
                 // Inform web socket clients of the new order
                 var context = GlobalHost.ConnectionManager.GetHubContext<OrderHub>();
-                context.Clients.All.addNewOrder(Json(order.ID));
+                context.Clients.All.addNewOrder(json);
 
                 return RedirectToAction("Index", "Home");
             }
