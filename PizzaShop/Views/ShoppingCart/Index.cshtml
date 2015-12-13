@@ -16,8 +16,10 @@
                     "/ShoppingCart/RemoveFromCart",
                     { "id": pizzaToDelete },
                     function (data) {
+                        var price = String(data.CartTotalPrice).replace(".", ",");
                         $('#row-' + data.DeleteId).fadeOut('fast');
-                        $('#cart-total').text(String(data.CartTotalPrice).replace(".", ","));
+                        $('#cart-total').text(price);
+                        $("#cart-main-btn").text("Shopping cart (" + price + " €)");
                     }
                 );
             }

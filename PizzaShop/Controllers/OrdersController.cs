@@ -44,6 +44,8 @@ namespace PizzaShop.Controllers
                 return View(order);
             }
 
+            ViewBag.CartTotalPrice = ShoppingCartController.getCartTotalPrice();
+
             return View();
         }
 

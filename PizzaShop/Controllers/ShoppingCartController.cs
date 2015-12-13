@@ -27,10 +27,15 @@ namespace PizzaShop.Controllers
                 cart = (List<CartItem>)Session["cart"];
             }
 
+            decimal totalPrice = countTotalPrice(cart);
+
+            // For displaying the current cart price on load
+            ViewBag.CartTotalPrice = totalPrice;
+
             var viewModel = new ShoppingCartViewModel
             {
                 CartPizzas = cart,
-                CartTotalPrice = countTotalPrice(cart)
+                CartTotalPrice = totalPrice
             };
 
             return View(viewModel);
