@@ -28,6 +28,7 @@ namespace PizzaShop.Controllers
         }
 
         // GET: /Orders/Detail/5
+        [System.Web.Mvc.Authorize(Roles = "admin")]
         public ActionResult Detail(int? id)
         {
             if (id == null)
