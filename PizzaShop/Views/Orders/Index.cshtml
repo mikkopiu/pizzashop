@@ -39,7 +39,7 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="order-table-body">
                 @foreach (var item in Model)
                 {
                     <tr>
@@ -96,13 +96,29 @@
         $(function () {
             // Reference the auto-generated proxy for the hub.
             var chat = $.connection.orderHub;
+            var $orderTableBodyEl = $("#order-table-body");
 
             // Create a function that the hub can call back to display messages.
             chat.client.addNewOrder = function (order) {
-                console.log(order);
+                order = JSON.parse(order);
 
-                var el = $.snackbar({ content: "Order received", timeout: 100 });
+                var el = $.snackbar({ content: "New order received", timeout: 250 });
                 el.snackbar("show");
+
+                var orderHtml = "<tr>";
+                orderHtml += "<td>" + String(order.PriceEur).replace(".", ",") + "</td>";
+                orderHtml += "<td>" + (new Date(order.OrderDate)).toLocaleString("fi-FI") + "</td>";
+                orderHtml += "<td>" + order.DeliveryAddress + "</td>";
+                orderHtml += "<td>" + order.DeliveryPostCode + "</td>";
+                orderHtml += "<td>" + order.DeliveryCity + "</td>";
+                orderHtml += "<td>" + order.PhoneNumber + "</td>";
+                orderHtml += '<td><a href="mailto:' + order.Email + '">' + order.Email + '</a></td>';
+                orderHtml += '<td><a href="/Orders/Detail/' + order.ID + '">Details</a></td>';
+                var $newOrderEl = $(orderHtml).hide();
+
+                $orderTableBodyEl.prepend($newOrderEl);
+
+                $newOrderEl.fadeIn("slow");
             };
 
             // Start the connection.
