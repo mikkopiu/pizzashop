@@ -27,7 +27,13 @@ namespace PizzaShop.Models
             set { toppings = value; }
         }
         
+        [Display(Name = "Image")]
         public string ImageFileName { get; set; }
+
+        public string GetFullFilePath()
+        {
+            return "https://pizzashop2015images.blob.core.windows.net/imagecontainer/" + ImageFileName;
+        }
 
         public void addTopping(Topping topping)
         {

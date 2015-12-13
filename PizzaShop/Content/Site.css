@@ -67,6 +67,15 @@ header h1 {
 }
 
 /*
+    Pizza edit
+*/
+
+.pizza-edit-image{
+    max-height: 100px;
+    max-width: 200px;
+}
+
+/*
     Menu & menu items
 */
 .menu-container {

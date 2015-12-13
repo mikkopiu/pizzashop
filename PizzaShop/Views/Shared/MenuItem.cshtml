@@ -3,9 +3,9 @@
 <div class="panel panel-default menu-item">
     <div class="panel-heading">@Model.Name</div>
     <div class="panel-body">
-        @if (Model.ImageFileName != null)
+        @if (Model.ImageFileName != null && !Model.ImageFileName.IsEmpty())
         {
-            <img src="@Model.ImageFileName" />
+            <img src="@Model.GetFullFilePath()" />
         }
         @foreach (var topping in Model.Toppings)
         {

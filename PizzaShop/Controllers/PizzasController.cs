@@ -89,7 +89,7 @@ namespace PizzaShop.Controllers
                 string fileName = pizza.ID + pizza.Name + Path.GetExtension(file.FileName);
 
                 // Save image blob in Azure Cloud Storage
-                string savedFilePath = await Task.Run(() =>
+                await Task.Run(() =>
                 {
                     var storageAccount = CloudStorageAccount.Parse(
                         ConfigurationManager.ConnectionStrings["ImageStorage"].ConnectionString
@@ -103,7 +103,7 @@ namespace PizzaShop.Controllers
                     return blockBlob.Uri.ToString();
                 });
                 
-                pizza.ImageFileName = savedFilePath;
+                pizza.ImageFileName = fileName;
 
                 var toppingIds = new List<string>();
                 toppingIds.Add(Request.Form["Topping1"]);
@@ -200,54 +200,109 @@ namespace PizzaShop.Controllers
         [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,PriceEur")] Pizza pizza)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,PriceEur,ImageFileName")] Pizza pizza, HttpPostedFileBase file)
         {
-            var toppingIds = new List<string>();
-            toppingIds.Add(Request.Form["Topping1"]);
-            toppingIds.Add(Request.Form["Topping2"]);
-            toppingIds.Add(Request.Form["Topping3"]);
-            toppingIds.Add(Request.Form["Topping4"]);
-            toppingIds.Add(Request.Form["Topping5"]);
-
-            foreach (var value in toppingIds)
-            {
-                int intValue = int.Parse(value);
-                if (intValue != 0)
-                {
-                    pizza.addTopping(db.Toppings.Find(intValue));
-                }
-            }
-
-            IEnumerable<SelectListItem> allToppings = GetSelectListItems();
-            ViewBag.AllToppings = allToppings;
-
-            var savedToppings = new int[5];
-
-            for (int i = 0; i < 5; i++)
-            {
-                if (pizza.Toppings.ElementAtOrDefault(i) != null)
-                {
-                    savedToppings[i] = pizza.Toppings[i].ID;
-                }
-                else
-                {
-                    savedToppings[i] = 0;
-                }
-            }
-
-            ViewBag.SavedToppings = savedToppings;
-
-            // Validate toppings.
-            bool duplicates = pizza.Toppings.GroupBy(n => n).Any(c => c.Count() > 1);
-
-            if (duplicates)
-            {
-                ViewBag.DuplicateToppings = "Please select a specific topping only once.";
-                return View(pizza);
-            }
-
             if (ModelState.IsValid)
             {
+                // Only touch the files if a new file is added
+                if (file != null)
+                {
+                    CloudStorageAccount storageAccount = null;
+                    CloudBlobClient blobClient = null;
+                    CloudBlobContainer container = null;
+
+                    if (pizza.ImageFileName != null && !pizza.ImageFileName.Equals(string.Empty))
+                    {
+                        // Delete previous image
+                        await Task.Run(() =>
+                        {
+                            // Retrieve storage account from connection string.
+                            storageAccount = CloudStorageAccount.Parse(
+                                    ConfigurationManager.ConnectionStrings["ImageStorage"].ConnectionString
+                                );
+
+                            // Create the blob client.
+                            blobClient = storageAccount.CreateCloudBlobClient();
+
+                            // Retrieve reference to a previously created container.
+                            container = blobClient.GetContainerReference("imagecontainer");
+
+                            // Retrieve reference
+                            CloudBlockBlob blockBlob = container.GetBlockBlobReference(pizza.ImageFileName);
+
+                            // Delete the blob.
+                            blockBlob.Delete();
+                        });
+                    }
+
+                    // Save new file
+                    string fileName = pizza.ID + pizza.Name + Path.GetExtension(file.FileName);
+
+                    pizza.ImageFileName = fileName;
+
+                    // Save image blob in Azure Cloud Storage
+                    await Task.Run(() =>
+                    {
+                        // No previous file existed, so no account info was loaded
+                        if (container == null)
+                        {
+                            storageAccount = CloudStorageAccount.Parse(
+                                    ConfigurationManager.ConnectionStrings["ImageStorage"].ConnectionString
+                                );
+                            blobClient = storageAccount.CreateCloudBlobClient();
+                            container = blobClient.GetContainerReference("imagecontainer");
+                        }
+
+                        var blockBlob = container.GetBlockBlobReference(fileName);
+                        blockBlob.UploadFromStream(file.InputStream);
+
+                        return blockBlob.Uri.ToString();
+                    });
+                }
+
+                var toppingIds = new List<string>();
+                toppingIds.Add(Request.Form["Topping1"]);
+                toppingIds.Add(Request.Form["Topping2"]);
+                toppingIds.Add(Request.Form["Topping3"]);
+                toppingIds.Add(Request.Form["Topping4"]);
+                toppingIds.Add(Request.Form["Topping5"]);
+
+                foreach (var value in toppingIds)
+                {
+                    int intValue = int.Parse(value);
+                    if (intValue != 0)
+                    {
+                        pizza.addTopping(db.Toppings.Find(intValue));
+                    }
+                }
+
+                IEnumerable<SelectListItem> allToppings = GetSelectListItems();
+                ViewBag.AllToppings = allToppings;
+
+                var savedToppings = new int[5];
+
+                for (int i = 0; i < 5; i++)
+                {
+                    if (pizza.Toppings.ElementAtOrDefault(i) != null)
+                    {
+                        savedToppings[i] = pizza.Toppings[i].ID;
+                    }
+                    else
+                    {
+                        savedToppings[i] = 0;
+                    }
+                }
+
+                ViewBag.SavedToppings = savedToppings;
+
+                // Validate toppings.
+                bool duplicates = pizza.Toppings.GroupBy(n => n).Any(c => c.Count() > 1);
+
+                if (duplicates)
+                {
+                    ViewBag.DuplicateToppings = "Please select a specific topping only once.";
+                    return View(pizza);
+                }
                 
 
                 Pizza dbPizza = db.Pizzas.Include(p => p.Toppings).Single(c => c.ID == pizza.ID);
@@ -273,7 +328,7 @@ namespace PizzaShop.Controllers
                     }
                 }
 
-                db.SaveChanges();
+                await db.SaveChangesAsync();
 
                 return RedirectToAction("Index");
             }
