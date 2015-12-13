@@ -25,6 +25,8 @@ namespace PizzaShop
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/snackbar.min.css",
+                      "~/Content/material.css",
                       "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/globalization").Include(
@@ -36,6 +38,12 @@ namespace PizzaShop
                       "~/Scripts/globalize/currency.*",
                       "~/Scripts/globalize/number.*",
                       "~/Scripts/globalize/message.*"));
+
+            bundles.Add(new ScriptBundle("~/bundles/snackbar").Include(
+                "~/Scripts/snackbar.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/signalR").Include(
+                "~/Scripts/jquery.signalR*"));
         }
     }
 }

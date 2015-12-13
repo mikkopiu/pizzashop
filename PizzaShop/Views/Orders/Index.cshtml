@@ -73,3 +73,23 @@
         </table>
     </div>
 </div>
+
+@* Container for all snackbar notifications *@
+<div id="snackbar-container"></div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/snackbar")
+    @Scripts.Render("~/bundles/signalR")
+}
+
+<script type="text/javascript">
+    $(function () {
+        var options = {
+            content: "Some text", // text of the snackbar
+            timeout: 250 // time in milliseconds after the snackbar autohides, 0 is disabled
+        };
+
+        var el = $.snackbar(options);
+        el.snackbar("show");
+    });
+</script>
