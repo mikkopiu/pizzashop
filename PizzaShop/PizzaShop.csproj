@@ -187,6 +187,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\OrderHub.cs" />
     <Compile Include="Migrations\201512101717224_Initial.cs" />
     <Compile Include="Migrations\201512101717224_Initial.Designer.cs">
       <DependentUpon>201512101717224_Initial.cs</DependentUpon>
@@ -266,7 +267,6 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
-    <Compile Include="OrderHub.cs" />
     <Compile Include="Models\OrderLine.cs" />
     <Compile Include="Models\Pizza.cs" />
     <Compile Include="Models\ShoppingCartRemoveViewModel.cs" />
