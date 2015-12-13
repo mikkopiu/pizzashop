@@ -16,9 +16,7 @@ namespace PizzaShop.Models
         // Calcuate the total price of a list of CartItem's (i.e. cart in session)
         public static decimal CountCartTotalPrice(List<CartItem> cart)
         {
-            return cart?
-                .Select(item => item.GetActualPrice())
-                .Aggregate((acc, price) => acc + price) ?? 0.0m;
+            return cart?.Select(item => item.GetActualPrice()).DefaultIfEmpty(0).Sum() ?? 0.0m;
         }
     }
 }
