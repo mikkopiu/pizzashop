@@ -356,11 +356,37 @@ namespace PizzaShop.Controllers
         [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Pizza pizza = db.Pizzas.Find(id);
+
+            if (pizza.ImageFileName != null && !pizza.ImageFileName.Equals(string.Empty))
+            {
+                // Delete previous image
+                await Task.Run(() =>
+                {
+                    // Retrieve storage account from connection string.
+                    CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+                            ConfigurationManager.ConnectionStrings["ImageStorage"].ConnectionString
+                        );
+
+                    // Create the blob client.
+                    CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+                    // Retrieve reference to a previously created container.
+                    CloudBlobContainer container = blobClient.GetContainerReference("imagecontainer");
+
+                    // Retrieve reference
+                    CloudBlockBlob blockBlob = container.GetBlockBlobReference(pizza.ImageFileName);
+
+                    // Delete the blob.
+                    blockBlob.Delete();
+                });
+            }
+
             db.Pizzas.Remove(pizza);
             db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
