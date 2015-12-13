@@ -79,31 +79,29 @@ namespace PizzaShop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,Name,PriceEur")] Pizza pizza, HttpPostedFileBase file)
         {
-            if (file == null)
+            if (ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty, "An image file must be chosen.");
-            }
-            else if (ModelState.IsValid)
-            {
-
-                string fileName = pizza.ID + pizza.Name + Path.GetExtension(file.FileName);
-
-                // Save image blob in Azure Cloud Storage
-                await Task.Run(() =>
+                if (file != null)
                 {
-                    var storageAccount = CloudStorageAccount.Parse(
-                        ConfigurationManager.ConnectionStrings["ImageStorage"].ConnectionString
-                    );
-                    var blobClient = storageAccount.CreateCloudBlobClient();
-                    var container = blobClient.GetContainerReference("imagecontainer");
+                    string fileName = pizza.ID + pizza.Name + Path.GetExtension(file.FileName);
 
-                    var blockBlob = container.GetBlockBlobReference(fileName);
-                    blockBlob.UploadFromStream(file.InputStream);
+                    // Save image blob in Azure Cloud Storage
+                    await Task.Run(() =>
+                    {
+                        var storageAccount = CloudStorageAccount.Parse(
+                            ConfigurationManager.ConnectionStrings["ImageStorage"].ConnectionString
+                        );
+                        var blobClient = storageAccount.CreateCloudBlobClient();
+                        var container = blobClient.GetContainerReference("imagecontainer");
 
-                    return blockBlob.Uri.ToString();
-                });
-                
-                pizza.ImageFileName = fileName;
+                        var blockBlob = container.GetBlockBlobReference(fileName);
+                        blockBlob.UploadFromStream(file.InputStream);
+
+                        return blockBlob.Uri.ToString();
+                    });
+
+                    pizza.ImageFileName = fileName;
+                }
 
                 var toppingIds = new List<string>();
                 toppingIds.Add(Request.Form["Topping1"]);
