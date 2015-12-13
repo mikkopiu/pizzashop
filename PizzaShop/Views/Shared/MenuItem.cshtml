@@ -14,7 +14,7 @@
         <div class="button-container">
             <button type="button" class="btn btn-default edit-pizza-btn" data-id="@Model.ID">Edit</button>
             <button type="button" class="btn btn-success add-to-cart-btn" data-id="@Model.ID">
-            Add to cart (@Model.PriceEur &euro;)
+            Add to cart (@Model.PriceEur.ToString().Replace(".", ",") &euro;)
             </button>
         </div>
     </div>

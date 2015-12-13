@@ -23,7 +23,7 @@
                     allToppings.forEach(function (d) {
 
                         html += '<option value="' + d.ID + '">' +
-                            d.Name + ' (' + d.PriceEur + ' €)' +
+                            d.Name + ' (' + String(d.PriceEur).replace(".", ",") + ' €)' +
                             '</option>';
                     });
                 }
@@ -42,7 +42,7 @@
                     function (data) {
                         $("#cart-main-btn")
                             .text("Shopping cart (" +
-                                data.CartTotalPrice + " €)"
+                                String(data.CartTotalPrice).replace(".", ",") + " €)"
                             );
                     }
                 );
