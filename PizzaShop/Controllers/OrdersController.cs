@@ -71,12 +71,16 @@ namespace PizzaShop.Controllers
             {
                 var cart = (List<CartItem>)Session["cart"];
 
+                decimal totalPrice = 0m;
+
                 foreach (var cartItem in cart)
                 {
                     OrderLine orderLine = new OrderLine();
                     //orderLine.Pizza = cartItem.Pizza;
                     orderLine.PizzaID = cartItem.Pizza.ID;
                     orderLine.Order = order;
+
+                    totalPrice += cartItem.GetActualPrice();
 
                     var extraToppings = cartItem.ExtraToppings;
 
@@ -94,13 +98,11 @@ namespace PizzaShop.Controllers
 
                     order.addOrderLine(orderLine);
                 }
-                try {
-                    db.Orders.Add(order);
-                    db.SaveChanges();
-                } catch (Exception e)
-                {
-                    Debug.WriteLine(e.InnerException.ToString());
-                }
+
+                order.PriceEur = totalPrice;
+
+                db.Orders.Add(order);
+                db.SaveChanges();
 
                 return RedirectToAction("Index", "Home");
             }
