@@ -20,6 +20,9 @@ namespace PizzaShop.Models
         [Required]
         public int PizzaID { get; set; }
 
+        [Required]
+        public decimal PriceEur { get; set; }
+
         [ForeignKey("OrderID")]
         public Order Order { get; set; }
 

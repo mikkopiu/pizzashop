@@ -251,6 +251,10 @@
     <Compile Include="Migrations\201512131413161_PizzaUpdate11.Designer.cs">
       <DependentUpon>201512131413161_PizzaUpdate11.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512131550429_PizzaUpdate12.cs" />
+    <Compile Include="Migrations\201512131550429_PizzaUpdate12.Designer.cs">
+      <DependentUpon>201512131550429_PizzaUpdate12.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CartItem.cs" />
@@ -356,6 +360,7 @@
     <Content Include="Views\Orders\Order.cshtml" />
     <Content Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Orders\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -422,6 +427,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512131413161_PizzaUpdate11.resx">
       <DependentUpon>201512131413161_PizzaUpdate11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512131550429_PizzaUpdate12.resx">
+      <DependentUpon>201512131550429_PizzaUpdate12.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

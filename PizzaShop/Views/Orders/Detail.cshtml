@@ -1,0 +1,82 @@
+﻿@using PizzaShop.Models
+
+@model PizzaShop.Models.Order
+
+@{
+    ViewBag.Title = "Order details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Order details</h2>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Order lines</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Pizza</th>
+                    <th>Toppings</th>
+                    <th>Extra Toppings</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderLines)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Pizza.Name)
+                        </td>
+                        <td>
+                            @{ int i = 0; }
+                            @foreach (Topping t in item?.Pizza?.Toppings ?? new List<Topping>())
+                            {
+                                if (i + 1 < item.Pizza.Toppings.Count())
+                                {
+                                    @: @t.Name,
+                                        }
+                                else
+                                {
+                                    @: @t.Name
+                                        }
+                                i++;
+                            }
+                        </td>
+                        <td>
+                            @{ int j = 0; }
+                            @foreach (CustomPizzaTopping t in item?.CustomPizzaToppings ?? new List<CustomPizzaTopping>())
+                            {
+                                if (j + 1 < item.CustomPizzaToppings.Count())
+                                {
+                                    @: @t.Topping.Name,
+                                        }
+                                else
+                                {
+                                    @: @t.Topping.Name
+                                        }
+                                j++;
+                            }
+                        </td>
+
+                        <td>
+                            @item.PriceEur.ToString().Replace(".", ",") &euro;
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr class="active">
+                    <td><strong>Total</strong></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <strong id="cart-total">@Model.PriceEur.ToString().Replace(".", ",")</strong> &euro;
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

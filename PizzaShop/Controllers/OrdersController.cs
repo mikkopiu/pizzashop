@@ -24,6 +24,28 @@ namespace PizzaShop.Controllers
             return View(db.Orders.Include(o => o.OrderLines).ToList());
         }
 
+        // GET: /Orders/Detail/5
+        public ActionResult Detail(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var order = db.Orders
+                .Include(o => o.OrderLines)
+                .Include("OrderLines.Pizza.Toppings")
+                .Include("OrderLines.CustomPizzaToppings.Topping")
+                .Where(c => c.ID == id).First();
+
+            //var order = db.Orders.Include(o => o.OrderLines).Where(c => c.ID == id);
+
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+            return View(order);
+        }
+
         // GET: Enter order details
         public ActionResult Order()
         {
