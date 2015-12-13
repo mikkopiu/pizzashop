@@ -14,7 +14,7 @@ namespace PizzaShop.Models
         public int ID { get; set; }
 
         [Required]
-        public int PriceCents { get; set; }
+        public decimal PriceEur { get; set; }
 
         // Optional, orders can be made by unregistered users
         public ApplicationUser Client { get; set; }
