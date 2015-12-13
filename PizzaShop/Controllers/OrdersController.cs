@@ -24,7 +24,7 @@ namespace PizzaShop.Controllers
         [System.Web.Mvc.Authorize(Roles = "admin")]
         public ActionResult Index()
         {
-            return View(db.Orders.Include(o => o.OrderLines).ToList());
+            return View(db.Orders.Include(o => o.OrderLines).OrderByDescending(o => o.OrderDate).ToList());
         }
 
         // GET: /Orders/Detail/5
