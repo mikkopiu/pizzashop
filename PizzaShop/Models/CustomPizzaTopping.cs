@@ -16,13 +16,11 @@ namespace PizzaShop.Models
         public int OrderLineID { get; set; }
 
         [Required]
-        public int ToppingId { get; set; }
-
+        public int ToppingID { get; set; }
 
         [ForeignKey("OrderLineID")]
         public OrderLine OrderLine { get; set; }
 
-        [ForeignKey("OrderLineID")]
         public Topping Topping { get; set; }
     }
 }

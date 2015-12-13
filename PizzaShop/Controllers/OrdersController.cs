@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Net;
 using Microsoft.AspNet.Identity;
+using System.Diagnostics;
 
 namespace PizzaShop.Controllers
 {
@@ -58,13 +59,40 @@ namespace PizzaShop.Controllers
         {
             order.OrderDate = DateTime.Now;
 
-            bool isvalid = ModelState.IsValid;
-
-
             if (ModelState.IsValid)
             {
-                db.Orders.Add(order);
-                db.SaveChanges();
+                var cart = (List<CartItem>)Session["cart"];
+
+                foreach (var cartItem in cart)
+                {
+                    OrderLine orderLine = new OrderLine();
+                    //orderLine.Pizza = cartItem.Pizza;
+                    orderLine.PizzaID = cartItem.Pizza.ID;
+                    orderLine.Order = order;
+
+                    var extraToppings = cartItem.ExtraToppings;
+
+                    if (extraToppings != null)
+                    {
+                        foreach (var pizzaTopping in cartItem.ExtraToppings)
+                        {
+                            CustomPizzaTopping customPizzaTopping = new CustomPizzaTopping();
+                            customPizzaTopping.OrderLine = orderLine;
+                            //customPizzaTopping.Topping = pizzaTopping;
+                            customPizzaTopping.ToppingID = pizzaTopping.ID;
+                            orderLine.addCustomPizzaTopping(customPizzaTopping);
+                        }
+                    }
+
+                    order.addOrderLine(orderLine);
+                }
+                try {
+                    db.Orders.Add(order);
+                    db.SaveChanges();
+                } catch (Exception e)
+                {
+                    Debug.WriteLine(e.InnerException.ToString());
+                }
 
                 return RedirectToAction("Index", "Home");
             }
