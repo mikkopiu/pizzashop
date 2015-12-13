@@ -7,6 +7,10 @@
         {
             <img src="@Model.GetFullFilePath()" />
         }
+        else
+        {
+            <img src="~/Images/default-pizza_medium.jpg" />
+        }
         @foreach (var topping in Model.Toppings)
         {
             <div class="topping">
