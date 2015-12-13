@@ -1,25 +1,13 @@
 ﻿@model PizzaShop.Models.Pizza
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Delete Pizza";
 }
 
-<h2>Delete</h2>
+<h2>Delete pizza</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to delete @Html.DisplayFor(model => model.Name)?</h3>
 <div>
-    <h4>Pizza</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-    </dl>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
