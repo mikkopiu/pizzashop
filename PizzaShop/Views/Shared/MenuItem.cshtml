@@ -3,7 +3,10 @@
 <div class="panel panel-default menu-item">
     <div class="panel-heading">@Model.Name</div>
     <div class="panel-body">
-        <img class="img-responsive" src="~/Images/default-pizza_medium.jpg" />
+        @if (Model.ImageFileName != null)
+        {
+            <img src="@Model.ImageFileName" />
+        }
         @foreach (var topping in Model.Toppings)
         {
             <div class="topping">

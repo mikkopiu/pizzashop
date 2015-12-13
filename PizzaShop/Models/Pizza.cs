@@ -2,6 +2,7 @@
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 
 namespace PizzaShop.Models
 {
@@ -25,6 +26,8 @@ namespace PizzaShop.Models
             get { return toppings; }
             set { toppings = value; }
         }
+        
+        public string ImageFileName { get; set; }
 
         public void addTopping(Topping topping)
         {

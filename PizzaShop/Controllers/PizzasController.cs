@@ -7,6 +7,12 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PizzaShop.Models;
+using System.IO;
+using System.Threading.Tasks;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
+using System.Configuration;
 
 namespace PizzaShop.Controllers
 {
@@ -71,56 +77,80 @@ namespace PizzaShop.Controllers
         [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,PriceEur")] Pizza pizza)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Name,PriceEur")] Pizza pizza, HttpPostedFileBase file)
         {
-            var toppingIds = new List<string>();
-            toppingIds.Add(Request.Form["Topping1"]);
-            toppingIds.Add(Request.Form["Topping2"]);
-            toppingIds.Add(Request.Form["Topping3"]);
-            toppingIds.Add(Request.Form["Topping4"]);
-            toppingIds.Add(Request.Form["Topping5"]);
-
-            var savedToppings = new int[5];
-
-            foreach (var value in toppingIds)
+            if (file == null)
             {
-                int intValue = int.Parse(value);
-                if (intValue != 0)
-                {
-                    pizza.addTopping(db.Toppings.Find(intValue));
-                }
+                ModelState.AddModelError(string.Empty, "An image file must be chosen.");
             }
-
-            for (int i = 0; i < 5; i++)
+            else if (ModelState.IsValid)
             {
-                if (pizza.Toppings.ElementAtOrDefault(i) != null)
+
+                string fileName = pizza.ID + pizza.Name + Path.GetExtension(file.FileName);
+
+                // Save image blob in Azure Cloud Storage
+                string savedFilePath = await Task.Run(() =>
                 {
-                    savedToppings[i] = pizza.Toppings[i].ID;
-                }
-                else
+                    var storageAccount = CloudStorageAccount.Parse(
+                        ConfigurationManager.ConnectionStrings["ImageStorage"].ConnectionString
+                    );
+                    var blobClient = storageAccount.CreateCloudBlobClient();
+                    var container = blobClient.GetContainerReference("imagecontainer");
+
+                    var blockBlob = container.GetBlockBlobReference(fileName);
+                    blockBlob.UploadFromStream(file.InputStream);
+
+                    return blockBlob.Uri.ToString();
+                });
+                
+                pizza.ImageFileName = savedFilePath;
+
+                var toppingIds = new List<string>();
+                toppingIds.Add(Request.Form["Topping1"]);
+                toppingIds.Add(Request.Form["Topping2"]);
+                toppingIds.Add(Request.Form["Topping3"]);
+                toppingIds.Add(Request.Form["Topping4"]);
+                toppingIds.Add(Request.Form["Topping5"]);
+
+                var savedToppings = new int[5];
+
+                foreach (var value in toppingIds)
                 {
-                    savedToppings[i] = 0;
+                    int intValue = int.Parse(value);
+                    if (intValue != 0)
+                    {
+                        pizza.addTopping(db.Toppings.Find(intValue));
+                    }
                 }
-            }
+
+                for (int i = 0; i < 5; i++)
+                {
+                    if (pizza.Toppings.ElementAtOrDefault(i) != null)
+                    {
+                        savedToppings[i] = pizza.Toppings[i].ID;
+                    }
+                    else
+                    {
+                        savedToppings[i] = 0;
+                    }
+                }
             
-            ViewBag.SavedToppings = savedToppings;
+                ViewBag.SavedToppings = savedToppings;
 
-            IEnumerable<SelectListItem> allToppings = GetSelectListItems();
-            ViewBag.AllToppings = allToppings;
+                IEnumerable<SelectListItem> allToppings = GetSelectListItems();
+                ViewBag.AllToppings = allToppings;
 
-            // Validate toppings.
-            bool duplicates = pizza.Toppings.GroupBy(n => n).Any(c => c.Count() > 1);
+                // Validate toppings.
+                bool duplicates = pizza.Toppings.GroupBy(n => n).Any(c => c.Count() > 1);
             
-            if(duplicates)
-            {
-                ViewBag.DuplicateToppings = "Please select a specific topping only once.";
-                return View(pizza);
-            }
+                if(duplicates)
+                {
+                    ViewBag.DuplicateToppings = "Please select a specific topping only once.";
+                    return View(pizza);
+                }
 
-            if (ModelState.IsValid)
-            {
                 db.Pizzas.Add(pizza);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 
                 return RedirectToAction("Index");
             }
@@ -281,6 +311,7 @@ namespace PizzaShop.Controllers
             return RedirectToAction("Index");
         }
 
+        // Used to fetch data when customer is editing a Pizza
         [HttpPost]
         public ActionResult Detail(int id)
         {
