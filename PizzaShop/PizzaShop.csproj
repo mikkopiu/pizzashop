@@ -268,6 +268,10 @@
     <Compile Include="Migrations\201512131550429_PizzaUpdate12.Designer.cs">
       <DependentUpon>201512131550429_PizzaUpdate12.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512132022115_toppingUpdate.cs" />
+    <Compile Include="Migrations\201512132022115_toppingUpdate.Designer.cs">
+      <DependentUpon>201512132022115_toppingUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CartItem.cs" />
@@ -447,6 +451,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512131550429_PizzaUpdate12.resx">
       <DependentUpon>201512131550429_PizzaUpdate12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512132022115_toppingUpdate.resx">
+      <DependentUpon>201512132022115_toppingUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
