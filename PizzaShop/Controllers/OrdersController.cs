@@ -9,6 +9,8 @@ using System.Data.Entity;
 using System.Net;
 using Microsoft.AspNet.Identity;
 using System.Diagnostics;
+using PizzaShop.Hubs;
+using Microsoft.AspNet.SignalR;
 
 namespace PizzaShop.Controllers
 {
@@ -18,7 +20,7 @@ namespace PizzaShop.Controllers
 
         // List all orders
         // GET: /Orders/Index
-        [Authorize(Roles = "admin")]
+        [System.Web.Mvc.Authorize(Roles = "admin")]
         public ActionResult Index()
         {
             return View(db.Orders.Include(o => o.OrderLines).ToList());
@@ -125,6 +127,10 @@ namespace PizzaShop.Controllers
 
                 db.Orders.Add(order);
                 db.SaveChanges();
+
+                // Inform web socket clients of the new order
+                var context = GlobalHost.ConnectionManager.GetHubContext<OrderHub>();
+                context.Clients.All.addNewOrder(Json(order.ID));
 
                 return RedirectToAction("Index", "Home");
             }
