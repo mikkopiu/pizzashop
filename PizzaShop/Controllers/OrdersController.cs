@@ -105,6 +105,7 @@ namespace PizzaShop.Controllers
                     //orderLine.Pizza = cartItem.Pizza;
                     orderLine.PizzaID = cartItem.Pizza.ID;
                     orderLine.Order = order;
+                    orderLine.PriceEur = cartItem.GetActualPrice();
 
                     totalPrice += cartItem.GetActualPrice();
 
