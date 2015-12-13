@@ -15,17 +15,8 @@ namespace PizzaShop.Controllers
         // GET: ShoppingCart
         public ActionResult Index()
         {
-            List<CartItem> cart;
-
             // Init cart if it doesn't already exist
-            if (Session["cart"] == null)
-            {
-                cart = new List<CartItem>();
-            }
-            else
-            {
-                cart = (List<CartItem>)Session["cart"];
-            }
+            List<CartItem> cart = (List<CartItem>)Session["cart"] ?? new List<CartItem>();
 
             decimal totalPrice = Utils.CountCartTotalPrice(cart);
 
@@ -47,22 +38,17 @@ namespace PizzaShop.Controllers
         public ActionResult AddToCart(int id)
         {
             // Retrieve the Pizza to add from the database
-            var addedPizza = db.Pizzas.Include(p => p.Toppings).Single(p => p.ID == id);
-
-            List<CartItem> cart;
-
+            var addedPizza = db.Pizzas
+                .Include(p => p.Toppings)
+                .Single(p => p.ID == id);
+            
             // Init cart if it doesn't already exist
-            if (Session["cart"] == null)
-            {
-                cart = new List<CartItem>();
-            } else
-            {
-                cart = (List<CartItem>)Session["cart"];
-            }
+            List<CartItem> cart = (List<CartItem>)Session["cart"] ?? new List<CartItem>();
 
             // Add to shopping cart
             cart.Add(new CartItem {
-                ID = long.Parse(addedPizza.ID.ToString() + Utils.UnixTimeNow().ToString()),
+                ID = long.Parse(addedPizza.ID.ToString() +
+                    Utils.UnixTimeNow().ToString()),
                 Pizza = addedPizza
             });
 
@@ -85,40 +71,32 @@ namespace PizzaShop.Controllers
         [HttpPost]
         public ActionResult AddCustomToCart(int id, int[] toppingIds)
         {
-            List<CartItem> cart;
-
             // Init cart if it doesn't already exist
-            if (Session["cart"] == null)
-            {
-                cart = new List<CartItem>();
-            }
-            else
-            {
-                cart = (List<CartItem>)Session["cart"];
-            }
+            List<CartItem> cart = (List<CartItem>)Session["cart"] ?? new List<CartItem>();
 
-            // Find the base pizza (no need to include toppings, as they will be replaced anyway)
-            Pizza selectedBasePizza = db.Pizzas.FirstOrDefault(p => p.ID == id);
-            List<Topping> toppings = new List<Topping>();
+            Pizza selectedBasePizza = db.Pizzas
+                .Include(p => p.Toppings)
+                .FirstOrDefault(p => p.ID == id);
 
-            // Not enough to just find every Topping in DB,
+            // The toppings won't replace the Pizza's toppings,
+            // but will instead be included in the CartItem.ExtraToppings List.
+            //
+            // NOTE: Not enough to just find every Topping in DB,
             // because there might be multiple instances of the same Topping
             // that need to be added here.
-            foreach (int tId in toppingIds)
-            {
-                Topping t = db.Toppings.FirstOrDefault(d => d.ID == tId);
-                if (t != null)
-                {
-                    toppings.Add(t);
-                }
-            }
+            List<Topping> extraToppings = toppingIds
+                .Select(tId => db.Toppings.FirstOrDefault(d => d.ID == tId))
+                .Where(res => res != null)
+                .ToList();
 
-            selectedBasePizza.Toppings = toppings;
-
+            // Create a CartItem with any selected extra Toppings
+            // and the base Pizza
             CartItem item = new CartItem
             {
-                ID = long.Parse(selectedBasePizza.ID.ToString() + Utils.UnixTimeNow().ToString()),
-                Pizza = selectedBasePizza
+                ID = long.Parse(selectedBasePizza.ID.ToString() +
+                    Utils.UnixTimeNow().ToString()),
+                Pizza = selectedBasePizza,
+                ExtraToppings = extraToppings
             };
 
             // Add to shopping cart
@@ -145,10 +123,10 @@ namespace PizzaShop.Controllers
         {
             // Remove the item from the cart
             var cart = (List<CartItem>)Session["cart"];
-            
-            string pizzaName = "";
 
             CartItem itemToRemove = cart.SingleOrDefault(item => item.ID == id);
+
+            string pizzaName = "";
 
             if (itemToRemove != null)
             {
