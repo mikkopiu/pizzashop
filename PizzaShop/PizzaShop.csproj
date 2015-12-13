@@ -351,6 +351,7 @@
     <Content Include="Views\Shared\CustomPizzaModal.cshtml" />
     <Content Include="Views\Orders\Order.cshtml" />
     <Content Include="Views\Error\PageNotFound.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

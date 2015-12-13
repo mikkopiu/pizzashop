@@ -34,10 +34,8 @@
                     @if (Request.IsAuthenticated && User.IsInRole("admin"))
                     {
                         <li>@Html.ActionLink("Toppings", "Index", "Toppings")</li>
-                    }
-                    @if (Request.IsAuthenticated && User.IsInRole("admin"))
-                    {
                         <li>@Html.ActionLink("Pizzas", "Index", "Pizzas")</li>
+                        <li>@Html.ActionLink("Orders", "Index", "Orders")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
